@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'banheiro_detalhes.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -29,47 +31,59 @@ class _HomeScreenState extends State<HomeScreen> {
     return _selected;
   }
 
-  Widget bathroomImagesButton(String image1, String image2,
+  Widget bathroomImagesButton(
+      String image1, String image2, BuildContext context,
       {String nameBath1 = "", String nameBath2 = ""}) {
     return Row(children: [
-      Column(
-        children: [
-          Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(55),
-                  border: Border.all(color: Colors.black, width: 6)),
-              child: ClipRRect(
+      ElevatedButton(
+        style: ElevatedButton.styleFrom(primary: Colors.transparent,shadowColor: Colors.transparent),
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const BanheiroDetalhesScreen()));
+          },
+          child: Column(
+            children: [
+              Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(55),
+                      border: Border.all(color: Colors.black, width: 6)),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(49),
+                      child: Image.asset(
+                        image1,
+                        width: 200,
+                        height: 200,
+                      ))),
+              Text(nameBath1)
+            ],
+          )),
+      ElevatedButton(
+          style: ElevatedButton.styleFrom(primary: Colors.transparent,shadowColor: Colors.transparent),
+          onPressed: () {},
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(55),
+                    border: Border.all(color: Colors.black, width: 6)),
+                child: ClipRRect(
                   borderRadius: BorderRadius.circular(49),
-                  child: Image.asset(
-                    image1,
-                    width: 200,
-                    height: 200,
-                  ))),
-          Text(nameBath1)
-        ],
-      ),
-      Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(55),
-                border: Border.all(color: Colors.black, width: 6)),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(49),
-              child: Column(
-                children: [
-                  Image.asset(
-                    image2,
-                    width: 200,
-                    height: 200,
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        image2,
+                        width: 200,
+                        height: 200,
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-          Text(nameBath2)
-        ],
-      )
+              Text(nameBath2)
+            ],
+          ))
     ]);
   }
 
@@ -112,16 +126,16 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Row(
               children: [
-                bathroomImagesButton(
-                    'assets/images/banheiro.jpg', 'assets/images/banheiro.jpg',
+                bathroomImagesButton('assets/images/banheiro.jpg',
+                    'assets/images/banheiro.jpg', context,
                     nameBath1: 'PA', nameBath2: 'LP')
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ),
             Row(
               children: [
-                bathroomImagesButton(
-                    'assets/images/banheiro.jpg', 'assets/images/banheiro.jpg',
+                bathroomImagesButton('assets/images/banheiro.jpg',
+                    'assets/images/banheiro.jpg', context,
                     nameBath1: 'Bandeco', nameBath2: 'Biblioteca')
               ],
               mainAxisAlignment: MainAxisAlignment.center,
