@@ -20,18 +20,20 @@ class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
               borderRadius: BorderRadius.circular(49),
               child: Image.asset(
                 'assets/images/banheiro.jpg',
-                width: 200,
-                height: 200,
+                width: 100,
+                height: 100,
               ))),
-      Column(
-        children: [
-          ListView(
-            children: const [ListTile(title: Text('PA'), leading: Icon(Icons.pin_drop)),
-            ListTile(title: Text('Interditado'), leading: Icon(Icons.info))
-            ],
-          )
+      Expanded(
+          child: ListView(
+        children: const <Widget>[
+          Card(
+              child:
+                  ListTile(title: Text('PA'), leading: Icon(Icons.pin_drop))),
+          Card(
+              child: ListTile(
+                  title: Text('Interditado'), leading: Icon(Icons.info)))
         ],
-      ),
+      ))
     ]);
   }
 
