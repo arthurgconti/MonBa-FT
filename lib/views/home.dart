@@ -104,13 +104,33 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(backgroundColor: Color(0xff818274)),
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 189, 224, 56),
+          centerTitle: true,
+          title: Text(
+            'MonBa-FT  |  HOME',
+            style: TextStyle(fontWeight: FontWeight.bold,
+            color: Colors.black,
+            fontSize: 32,
+            ),            
+          )
+        ),
+        backgroundColor: Color.fromARGB(255, 223, 223, 223),
         body: Container(
+          
             child: Column(
           children: [
-            const Text('Banheiros'),
+            SizedBox(height: 25.0),
+            const Text('Banheiros',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 25,
+              ),
+            ),
+            SizedBox(height: 25.0),
             Row(
               children: [
+                
                 customRadioButton(
                     1,
                     const Icon(
@@ -137,9 +157,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 bathroomImagesButton('assets/images/banheiro.jpg',
                     'assets/images/banheiro.jpg', context,
                     nameBath1: 'Bandeco', nameBath2: 'Biblioteca')
+                    
               ],
               mainAxisAlignment: MainAxisAlignment.center,
-            )
+            
+            ),
+            
           ],
         )));
   }
