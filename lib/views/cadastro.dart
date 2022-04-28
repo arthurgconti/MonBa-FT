@@ -13,19 +13,20 @@ class CadastroScreen extends StatelessWidget {
           centerTitle: true,
           title: Text(
             'MonBa-FT',
-            style: TextStyle(fontWeight: FontWeight.bold,
-            color: Colors.black,
-            fontSize: 45,
-            ),            
-          )
-      ),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              fontSize: 45,
+            ),
+          )),
       backgroundColor: Color.fromARGB(255, 223, 223, 223),
       body: Container(
         padding: const EdgeInsets.all(25),
         child: Center(
             child: Column(
           children: [
-            const Text('Cadastro',
+            const Text(
+              'Cadastro',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 25,
@@ -66,8 +67,7 @@ class CadastroScreen extends StatelessWidget {
                     SizedBox(
                       width: 350,
                       height: 45,
-                      child: 
-                      TextFormField(
+                      child: TextFormField(
                         decoration: const InputDecoration(
                           fillColor: Colors.white,
                           filled: true,
@@ -80,60 +80,56 @@ class CadastroScreen extends StatelessWidget {
                     SizedBox(
                       width: 350,
                       height: 45,
-                      child:
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            fillColor: Colors.white,
-                            filled: true,
-                            labelText: 'Celular',
-                            border: OutlineInputBorder(),
-                          ),
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          labelText: 'Celular',
+                          border: OutlineInputBorder(),
                         ),
                       ),
-                    SizedBox(height: 12.0),
-                    SizedBox(
-                      width: 350,
-                      height: 45,
-                      child:
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            fillColor: Colors.white,
-                            filled: true,
-                            labelText: 'Usuário',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
                     ),
                     SizedBox(height: 12.0),
                     SizedBox(
                       width: 350,
                       height: 45,
-                      child:
-                        TextFormField(
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            fillColor: Colors.white,
-                            filled: true,
-                            labelText: 'Senha',
-                            border: OutlineInputBorder(),
-                          ),
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          labelText: 'Usuário',
+                          border: OutlineInputBorder(),
                         ),
                       ),
+                    ),
                     SizedBox(height: 12.0),
                     SizedBox(
                       width: 350,
                       height: 45,
-                      child:
-                        TextFormField(
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            fillColor: Colors.white,
-                            filled: true,
-                            labelText: 'Confirmar Senha',
-                            border: OutlineInputBorder(),
-                          ),
+                      child: TextFormField(
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          labelText: 'Senha',
+                          border: OutlineInputBorder(),
                         ),
                       ),
+                    ),
+                    SizedBox(height: 12.0),
+                    SizedBox(
+                      width: 350,
+                      height: 45,
+                      child: TextFormField(
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          labelText: 'Confirmar Senha',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
                     SizedBox(height: 12.0),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -148,11 +144,10 @@ class CadastroScreen extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => LoginScreen()))
                       },
-                      child: const Text('Finalizar Cadastro',
+                      child: const Text(
+                        'Finalizar Cadastro',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black
-                        ),
+                            fontWeight: FontWeight.bold, color: Colors.black),
                       ),
                     ),
                   ],
