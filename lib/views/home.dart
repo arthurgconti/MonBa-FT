@@ -10,7 +10,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selected = 0;
+  int _selected = 1;
   void setSelected({int value = 1}) {
     if (value == 1) {
       setState(() {
@@ -36,7 +36,8 @@ class _HomeScreenState extends State<HomeScreen> {
       {String nameBath1 = "", String nameBath2 = ""}) {
     return Row(children: [
       ElevatedButton(
-        style: ElevatedButton.styleFrom(primary: Colors.transparent,shadowColor: Colors.transparent),
+          style: ElevatedButton.styleFrom(
+              primary: Colors.transparent, shadowColor: Colors.transparent),
           onPressed: () {
             Navigator.push(
                 context,
@@ -60,7 +61,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           )),
       ElevatedButton(
-          style: ElevatedButton.styleFrom(primary: Colors.transparent,shadowColor: Colors.transparent),
+          style: ElevatedButton.styleFrom(
+              primary: Colors.transparent, shadowColor: Colors.transparent),
           onPressed: () {},
           child: Column(
             children: [
@@ -105,23 +107,23 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 189, 224, 56),
-          centerTitle: true,
-          title: Text(
-            'MonBa-FT  |  HOME',
-            style: TextStyle(fontWeight: FontWeight.bold,
-            color: Colors.black,
-            fontSize: 32,
-            ),            
-          )
-        ),
+            backgroundColor: Color.fromARGB(255, 189, 224, 56),
+            centerTitle: true,
+            title: Text(
+              'MonBa-FT  |  HOME',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontSize: 32,
+              ),
+            )),
         backgroundColor: Color.fromARGB(255, 223, 223, 223),
         body: Container(
-          
             child: Column(
           children: [
             SizedBox(height: 25.0),
-            const Text('Banheiros',
+            const Text(
+              'Banheiros',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 25,
@@ -130,7 +132,6 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 25.0),
             Row(
               children: [
-                
                 customRadioButton(
                     1,
                     const Icon(
@@ -157,12 +158,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 bathroomImagesButton('assets/images/banheiro.jpg',
                     'assets/images/banheiro.jpg', context,
                     nameBath1: 'Bandeco', nameBath2: 'Biblioteca')
-                    
               ],
               mainAxisAlignment: MainAxisAlignment.center,
-            
             ),
-            
           ],
         )));
   }

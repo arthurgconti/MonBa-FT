@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:monba_ft/views/banheiro_notificar.dart';
 
 class BanheiroDetalhesScreen extends StatefulWidget {
   const BanheiroDetalhesScreen({Key? key}) : super(key: key);
@@ -83,7 +84,7 @@ class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
             title: Text('Sabonete'),
             leading: Icon(Icons.soap),
             children: [
-              ListTile(title: Text('Quantidade: 2')),
+              ListTile(title: Text('Quantidade de suportes: 2')),
               ListTile(
                 title: Text('Disponibilidade'),
                 trailing: Icon(
@@ -124,8 +125,9 @@ class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(backgroundColor: const Color(0xff818274)),
-        body:
-            IndexedStack(index: _currentScreen, children: [banheiroDetalhes()]),
+        body: IndexedStack(
+            index: _currentScreen,
+            children: [banheiroDetalhes(), BanheiroNotificarScreen()]),
         bottomNavigationBar: BottomNavigationBar(
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.feed), label: "De talhes"),
