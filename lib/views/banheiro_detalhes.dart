@@ -19,9 +19,9 @@ class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
           margin: const EdgeInsets.only(right: 10, left: 10),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(35),
-              border: Border.all(color: Colors.black54, width: 1.5)),
+              border: Border.all(color: Color.fromARGB(255, 189, 224, 56), width: 3.5)),
           child: ClipRRect(
-              borderRadius: BorderRadius.circular(35),
+              borderRadius: BorderRadius.circular(30),
               child: Image.asset(
                 'assets/images/banheiro.jpg',
                 width: 300,
@@ -124,10 +124,9 @@ class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(backgroundColor: const Color(0xff818274)),
-        body: IndexedStack(
-            index: _currentScreen,
-            children: [banheiroDetalhes(), BanheiroNotificarScreen()]),
+        appBar: AppBar(backgroundColor: const Color.fromARGB(255, 189, 224, 56)),
+        body:
+            IndexedStack(index: _currentScreen, children: [banheiroDetalhes()]),
         bottomNavigationBar: BottomNavigationBar(
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.feed), label: "De talhes"),

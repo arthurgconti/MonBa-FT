@@ -33,7 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget bathroomImagesButton(
       String image1, String image2, BuildContext context,
-      {String nameBath1 = "", String nameBath2 = ""}) {
+      {String nameBath1 = "", String nameBath2 = "",}) {
+        
     return Row(children: [
       ElevatedButton(
           style: ElevatedButton.styleFrom(
@@ -145,6 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ),
+            SizedBox(height: 25.0),
             Row(
               children: [
                 bathroomImagesButton('assets/images/banheiro.jpg',
