@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monba_ft/views/banheiro_notificar.dart';
+import 'package:monba_ft/views/banheiro_resolver.dart';
 
 class BanheiroDetalhesScreen extends StatefulWidget {
   const BanheiroDetalhesScreen({Key? key}) : super(key: key);
@@ -125,9 +126,10 @@ class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(backgroundColor: const Color.fromARGB(255, 189, 224, 56)),
-        body:
-            IndexedStack(index: _currentScreen, children: [banheiroDetalhes()]),
+        body: IndexedStack(index: _currentScreen, children: [banheiroDetalhes(), BanheiroNotificarScreen(), BanheiroResolverScreen()]),
+        backgroundColor: Color.fromARGB(255, 223, 223, 223),
         bottomNavigationBar: BottomNavigationBar(
+          
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.feed), label: "De talhes"),
             BottomNavigationBarItem(

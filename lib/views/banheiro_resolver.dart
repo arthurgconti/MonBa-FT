@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'form_notificar.dart';
 
-class BanheiroNotificarScreen extends StatefulWidget {
-  const BanheiroNotificarScreen({Key? key}) : super(key: key);
+class BanheiroResolverScreen extends StatefulWidget {
+  const BanheiroResolverScreen({Key? key}) : super(key: key);
 
   @override
-  State<BanheiroNotificarScreen> createState() =>
+  State<BanheiroResolverScreen> createState() =>
       _BanheiroNotificarScreenState();
 }
 
-class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
+class _BanheiroNotificarScreenState extends State<BanheiroResolverScreen> {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -29,6 +29,16 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
               title: const Text('Status'),
               leading: const Icon(Icons.info),
               children: [
+                Row(
+                  children: [
+                    Radio(
+                      value: true,
+                      groupValue: formNotificar.statusRadio,
+                      onChanged: (value) {},
+                    ),
+                    const Text("Banheiro Livre")
+                  ],
+                ),
                 Row(
                   children: [
                     Radio(
@@ -62,7 +72,7 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                       groupValue: formNotificar.papelHigienicoRadio,
                       onChanged: (value) {},
                     ),
-                    const Text("Em falta")
+                    const Text("Abastecido")
                   ],
                 ),
               ],
@@ -79,7 +89,7 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                       groupValue: formNotificar.papelToalhaRadio,
                       onChanged: (value) {},
                     ),
-                    const Text("Em falta")
+                    const Text("Abastecido")
                   ],
                 ),
               ],
@@ -96,14 +106,14 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                       groupValue: formNotificar.piaRadio,
                       onChanged: (value) {},
                     ),
-                    const Text("Pias defeituosas")
+                    const Text("Pias consertadas")
                   ],
                 ),
                 TextFormField(
                     decoration: const InputDecoration(
                         fillColor: Colors.white,
                         filled: true,
-                        labelText: 'Quantas pias estão com defeito?',
+                        labelText: 'Quantas pias foram consertadas?',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20.0)),
                           borderSide: BorderSide(color: Colors.white),
@@ -122,7 +132,7 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                       groupValue: formNotificar.saboneteRadio,
                       onChanged: (value) {},
                     ),
-                    const Text("Em falta")
+                    const Text("Abastecido")
                   ],
                 ),
               ],
@@ -139,14 +149,14 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                       groupValue: formNotificar.privadaRadio,
                       onChanged: (value) {},
                     ),
-                    const Text("Privadas defeituosas")
+                    const Text("Privadas Consertadas")
                   ],
                 ),
                 TextFormField(
                     decoration: const InputDecoration(
                         fillColor: Colors.white,
                         filled: true,
-                        labelText: 'Quantas privadas estão com defeito?',
+                        labelText: 'Quantas privadas foram consertadas?',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20.0)),
                           borderSide: BorderSide(color: Colors.white),
@@ -167,10 +177,10 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 backgroundColor: Colors.green,
                 duration: Duration(seconds: 1),
-                content: Text("Notificação enviada com Sucesso!")));
+                content: Text("Problema Resolvido com Sucesso!")));
           },
           child: const Text(
-            'Notificar Problema',
+            'Resolver Problema',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.black,

@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(55),
-                      border: Border.all(color: Colors.black, width: 6)),
+                      border: Border.all(color: Color.fromARGB(255, 189, 224, 56), width: 6)),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(49),
                       child: Image.asset(
@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(55),
-                    border: Border.all(color: Colors.black, width: 6)),
+                    border: Border.all(color: Color.fromARGB(255, 189, 224, 56), width: 6)),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(49),
                   child: Column(
