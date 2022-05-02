@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:monba_ft/enum/Status_enum.dart';
+import 'package:monba_ft/enum/statusEnum.dart';
 import 'package:monba_ft/model/banheiroBiblioteca.dart';
 import 'package:monba_ft/model/banheiroPA.dart';
 
@@ -139,7 +139,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(_banheiroLP.location);
     return Scaffold(
         appBar: AppBar(
             backgroundColor: Color.fromARGB(255, 189, 224, 56),

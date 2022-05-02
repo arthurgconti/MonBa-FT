@@ -1,4 +1,4 @@
-import '../enum/Status_enum.dart';
+import '../enum/statusEnum.dart';
 import 'banheiro.dart';
 
 class BanheiroBandeco extends Banheiro {

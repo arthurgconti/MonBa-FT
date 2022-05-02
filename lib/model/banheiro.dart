@@ -1,4 +1,4 @@
-import '../enum/Status_enum.dart';
+import '../enum/statusEnum.dart';
 
 abstract class Banheiro {
   String imagePath = '';

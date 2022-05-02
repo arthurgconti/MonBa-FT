@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:monba_ft/enum/notificarEnum.dart';
+import 'package:monba_ft/enum/resolverEnum.dart';
+import 'package:monba_ft/enum/statusEnum.dart';
+import 'package:monba_ft/views/form_resolver.dart';
 
 import 'form_notificar.dart';
 
@@ -15,7 +19,6 @@ class _BanheiroNotificarScreenState extends State<BanheiroResolverScreen> {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    NotificarForm formNotificar = NotificarForm();
     return Column(children: [
       Form(
         key: _formKey,
@@ -34,29 +37,27 @@ class _BanheiroNotificarScreenState extends State<BanheiroResolverScreen> {
                 Row(
                   children: [
                     Radio(
-                      value: true,
-                      groupValue: formNotificar.statusRadio,
-                      onChanged: (value) {},
+                      value: enm_status.naoInterditado,
+                      groupValue: ResolveForm.statusRadio,
+                      onChanged: (Enum? value) {
+                        if (value != null) {
+                          setState(() => ResolveForm.statusRadio = value);
+                        }
+                      },
                     ),
-                    const Text("Banheiro Livre")
+                    const Text("Banheiro não interditado")
                   ],
                 ),
                 Row(
                   children: [
                     Radio(
-                      value: true,
-                      groupValue: formNotificar.statusRadio,
-                      onChanged: (value) {},
-                    ),
-                    const Text("Interditado")
-                  ],
-                ),
-                Row(
-                  children: [
-                    Radio(
-                        value: "Parcialmente Interditado",
-                        groupValue: formNotificar.statusRadio,
-                        onChanged: (value) {}),
+                        value: enm_status.parcial,
+                        groupValue: ResolveForm.statusRadio,
+                        onChanged: (Enum? value) {
+                          if (value != null) {
+                            setState(() => ResolveForm.statusRadio = value);
+                          }
+                        }),
                     const Text("Parcialmente Interditado")
                   ],
                 ),
@@ -70,9 +71,14 @@ class _BanheiroNotificarScreenState extends State<BanheiroResolverScreen> {
                 Row(
                   children: [
                     Radio(
-                      value: true,
-                      groupValue: formNotificar.papelHigienicoRadio,
-                      onChanged: (value) {},
+                      value: enm_toiletPaper.disponivel,
+                      groupValue: ResolveForm.papelHigienicoRadio,
+                      onChanged: (Enum? value) {
+                        if (value != null) {
+                          setState(
+                              () => ResolveForm.papelHigienicoRadio = value);
+                        }
+                      },
                     ),
                     const Text("Abastecido")
                   ],
@@ -87,9 +93,13 @@ class _BanheiroNotificarScreenState extends State<BanheiroResolverScreen> {
                 Row(
                   children: [
                     Radio(
-                      value: true,
-                      groupValue: formNotificar.papelToalhaRadio,
-                      onChanged: (value) {},
+                      value: enm_paperTowel.disponivel,
+                      groupValue: ResolveForm.papelToalhaRadio,
+                      onChanged: (Enum? value) {
+                        if (value != null) {
+                          setState(() => ResolveForm.papelToalhaRadio = value);
+                        }
+                      },
                     ),
                     const Text("Abastecido")
                   ],
@@ -104,22 +114,42 @@ class _BanheiroNotificarScreenState extends State<BanheiroResolverScreen> {
                 Row(
                   children: [
                     Radio(
-                      value: true,
-                      groupValue: formNotificar.piaRadio,
-                      onChanged: (value) {},
+                      value: enm_fixedSink.todos,
+                      groupValue: ResolveForm.piaRadio,
+                      onChanged: (Enum? value) {
+                        if (value != null) {
+                          setState(() => ResolveForm.piaRadio = value);
+                        }
+                      },
                     ),
-                    const Text("Pias consertadas")
+                    const Text("Todas as pias consertadas")
                   ],
                 ),
-                TextFormField(
-                    decoration: const InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        labelText: 'Quantas pias foram consertadas?',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          borderSide: BorderSide(color: Colors.white),
-                        )))
+                Row(
+                  children: [
+                    Radio(
+                      value: enm_fixedSink.alguma,
+                      groupValue: ResolveForm.piaRadio,
+                      onChanged: (Enum? value) {
+                        if (value != null) {
+                          setState(() => ResolveForm.piaRadio = value);
+                        }
+                      },
+                    ),
+                    const Text("Alguma pia consertada")
+                  ],
+                ),
+                if (ResolveForm.piaRadio == enm_fixedSink.alguma)
+                  TextFormField(
+                      decoration: const InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          labelText: 'Quantas pias foram consertadas?',
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
+                            borderSide: BorderSide(color: Colors.white),
+                          )))
               ],
             )),
             Card(
@@ -131,8 +161,12 @@ class _BanheiroNotificarScreenState extends State<BanheiroResolverScreen> {
                   children: [
                     Radio(
                       value: true,
-                      groupValue: formNotificar.saboneteRadio,
-                      onChanged: (value) {},
+                      groupValue: ResolveForm.saboneteRadio,
+                      onChanged: (bool? value) {
+                        if (value != null) {
+                          setState(() => ResolveForm.saboneteRadio = value);
+                        }
+                      },
                     ),
                     const Text("Abastecido")
                   ],
@@ -147,22 +181,42 @@ class _BanheiroNotificarScreenState extends State<BanheiroResolverScreen> {
                 Row(
                   children: [
                     Radio(
-                      value: true,
-                      groupValue: formNotificar.privadaRadio,
-                      onChanged: (value) {},
+                      value: enm_fixedToilet.todos,
+                      groupValue: ResolveForm.privadaRadio,
+                      onChanged: (Enum? value) {
+                        if (value != null) {
+                          setState(() => ResolveForm.privadaRadio = value);
+                        }
+                      },
                     ),
-                    const Text("Privadas Consertadas")
+                    const Text("Todas as privadas Consertadas")
                   ],
                 ),
-                TextFormField(
-                    decoration: const InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        labelText: 'Quantas privadas foram consertadas?',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          borderSide: BorderSide(color: Colors.white),
-                        )))
+                Row(
+                  children: [
+                    Radio(
+                      value: enm_fixedToilet.alguma,
+                      groupValue: ResolveForm.privadaRadio,
+                      onChanged: (Enum? value) {
+                        if (value != null) {
+                          setState(() => ResolveForm.privadaRadio = value);
+                        }
+                      },
+                    ),
+                    const Text("Alguma privada consertada")
+                  ],
+                ),
+                if (ResolveForm.privadaRadio == enm_fixedToilet.alguma)
+                  TextFormField(
+                      decoration: const InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          labelText: 'Quantas privadas foram consertadas?',
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
+                            borderSide: BorderSide(color: Colors.white),
+                          )))
               ],
             )),
           ]),
@@ -180,6 +234,7 @@ class _BanheiroNotificarScreenState extends State<BanheiroResolverScreen> {
                 backgroundColor: Colors.green,
                 duration: Duration(seconds: 1),
                 content: Text("Problema Resolvido com Sucesso!")));
+            clearSelection();
           },
           child: const Text(
             'Resolver Problema',
@@ -189,5 +244,19 @@ class _BanheiroNotificarScreenState extends State<BanheiroResolverScreen> {
             ),
           )),
     ]);
+  }
+
+  void clearSelection() {
+    setState(() {
+      ResolveForm.statusRadio = enm_status.nenhum;
+      ResolveForm.papelHigienicoRadio = enm_toiletPaper.none;
+      ResolveForm.papelToalhaRadio = enm_paperTowel.none;
+      ResolveForm.piaRadio = enm_fixedSink.none;
+      ResolveForm.privadaRadio = enm_fixedToilet.none;
+      ResolveForm.saboneteRadio = false;
+
+      ResolveForm.privadasDefeituosas = 0;
+      ResolveForm.piasDefeituosas = 0;
+    });
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:monba_ft/enum/notificarEnum.dart';
+import 'package:monba_ft/enum/statusEnum.dart';
 
 import 'form_notificar.dart';
 
@@ -15,7 +17,6 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    NotificarForm formNotificar = NotificarForm();
     return Column(children: [
       Form(
         key: _formKey,
@@ -28,17 +29,19 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
             const Divider(),
             Card(
                 child: ExpansionTile(
+              maintainState: true,
               title: const Text('Status'),
               leading: const Icon(Icons.info),
               children: [
                 Row(
                   children: [
                     Radio(
-                      value: 0,
-                      groupValue: formNotificar.statusRadio,
-                      onChanged: (int? value) {
-                        if (value != null)
-                          setState(() => formNotificar.statusRadio = value);
+                      value: enm_status.totalmente,
+                      groupValue: NotificarForm.statusRadio,
+                      onChanged: (Enum? value) {
+                        if (value != null) {
+                          setState(() => NotificarForm.statusRadio = value);
+                        }
                       },
                     ),
                     const Text("Interditado")
@@ -47,11 +50,12 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                 Row(
                   children: [
                     Radio(
-                        value: 1,
-                        groupValue: formNotificar.statusRadio,
-                        onChanged: (int? value) {
-                          if (value != null)
-                            setState(() => formNotificar.statusRadio = value);
+                        value: enm_status.parcial,
+                        groupValue: NotificarForm.statusRadio,
+                        onChanged: (Enum? value) {
+                          if (value != null) {
+                            setState(() => NotificarForm.statusRadio = value);
+                          }
                         }),
                     const Text("Parcialmente Interditado")
                   ],
@@ -66,12 +70,13 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                 Row(
                   children: [
                     Radio(
-                      value: 0,
-                      groupValue: formNotificar.papelHigienicoRadio,
-                      onChanged: (int? value) {
-                        if (value != null)
+                      value: enm_toiletPaper.emFalta,
+                      groupValue: NotificarForm.papelHigienicoRadio,
+                      onChanged: (Enum? value) {
+                        if (value != null) {
                           setState(
-                              () => formNotificar.papelHigienicoRadio = value);
+                              () => NotificarForm.papelHigienicoRadio = value);
+                        }
                       },
                     ),
                     const Text("Em falta")
@@ -87,9 +92,14 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                 Row(
                   children: [
                     Radio(
-                      value: true,
-                      groupValue: formNotificar.papelToalhaRadio,
-                      onChanged: (value) {},
+                      value: enm_paperTowel.emFalta,
+                      groupValue: NotificarForm.papelToalhaRadio,
+                      onChanged: (Enum? value) {
+                        if (value != null) {
+                          setState(
+                              () => NotificarForm.papelToalhaRadio = value);
+                        }
+                      },
                     ),
                     const Text("Em falta")
                   ],
@@ -105,21 +115,27 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                   children: [
                     Radio(
                       value: true,
-                      groupValue: formNotificar.piaRadio,
-                      onChanged: (value) {},
+                      groupValue: NotificarForm.piaRadio,
+                      onChanged: (bool? value) {
+                        if (value != null) {
+                          setState(() => NotificarForm.piaRadio = value);
+                        }
+                      },
                     ),
                     const Text("Pias defeituosas")
                   ],
                 ),
-                TextFormField(
-                    decoration: const InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        labelText: 'Quantas pias estão com defeito?',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          borderSide: BorderSide(color: Colors.white),
-                        )))
+                if (NotificarForm.piaRadio)
+                  TextFormField(
+                      decoration: const InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          labelText: 'Quantas pias estão com defeito?',
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
+                            borderSide: BorderSide(color: Colors.white),
+                          )))
               ],
             )),
             Card(
@@ -130,9 +146,13 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                 Row(
                   children: [
                     Radio(
-                      value: true,
-                      groupValue: formNotificar.saboneteRadio,
-                      onChanged: (value) {},
+                      value: false,
+                      groupValue: NotificarForm.saboneteRadio,
+                      onChanged: (bool? value) {
+                        if (value != null) {
+                          setState(() => NotificarForm.saboneteRadio = value);
+                        }
+                      },
                     ),
                     const Text("Em falta")
                   ],
@@ -143,26 +163,33 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                 child: ExpansionTile(
               title: const Text('Privada'),
               leading: const Icon(Icons.event_seat),
+              maintainState: true,
               children: [
                 Row(
                   children: [
                     Radio(
                       value: true,
-                      groupValue: formNotificar.privadaRadio,
-                      onChanged: (value) {},
+                      groupValue: NotificarForm.privadaRadio,
+                      onChanged: (bool? value) {
+                        if (value != null) {
+                          setState(() => NotificarForm.privadaRadio = value);
+                        }
+                      },
                     ),
                     const Text("Privadas defeituosas")
                   ],
                 ),
-                TextFormField(
-                    decoration: const InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        labelText: 'Quantas privadas estão com defeito?',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          borderSide: BorderSide(color: Colors.white),
-                        )))
+                if (NotificarForm.privadaRadio)
+                  TextFormField(
+                      decoration: const InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          labelText: 'Quantas privadas estão com defeito?',
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
+                            borderSide: BorderSide(color: Colors.white),
+                          )))
               ],
             )),
           ]),
@@ -180,6 +207,7 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                 backgroundColor: Colors.green,
                 duration: Duration(seconds: 1),
                 content: Text("Notificação enviada com Sucesso!")));
+            clearSelection();
           },
           child: const Text(
             'Notificar Problema',
@@ -189,5 +217,19 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
             ),
           )),
     ]);
+  }
+
+  void clearSelection() {
+    setState(() {
+      NotificarForm.statusRadio = enm_status.nenhum;
+      NotificarForm.papelHigienicoRadio = enm_toiletPaper.none;
+      NotificarForm.papelToalhaRadio = enm_paperTowel.none;
+      NotificarForm.piaRadio = false;
+      NotificarForm.saboneteRadio = true;
+      NotificarForm.privadaRadio = false;
+
+      NotificarForm.privadasDefeituosas = 0;
+      NotificarForm.piasDefeituosas = 0;
+    });
   }
 }

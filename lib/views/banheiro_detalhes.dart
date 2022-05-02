@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:monba_ft/enum/Status_enum.dart';
+import 'package:monba_ft/enum/statusEnum.dart';
 import 'package:monba_ft/views/banheiro_notificar.dart';
 import 'package:monba_ft/views/banheiro_resolver.dart';
 
