@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'form_notificar.dart';
 
 class BanheiroResolverScreen extends StatefulWidget {
-  const BanheiroResolverScreen({Key? key}) : super(key: key);
+  String bathroomLocation;
+  BanheiroResolverScreen(this.bathroomLocation, {Key? key}) : super(key: key);
 
   @override
   State<BanheiroResolverScreen> createState() =>
@@ -20,9 +21,10 @@ class _BanheiroNotificarScreenState extends State<BanheiroResolverScreen> {
         key: _formKey,
         child: Expanded(
           child: ListView(children: [
-            const Card(
+            Card(
                 child: ListTile(
-                    title: Text('PA'), leading: Icon(Icons.location_on))),
+                    title: Text(widget.bathroomLocation),
+                    leading: const Icon(Icons.location_on))),
             const Divider(),
             Card(
                 child: ExpansionTile(

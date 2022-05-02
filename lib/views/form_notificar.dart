@@ -1,12 +1,12 @@
 import 'dart:core';
 
 class NotificarForm {
-  int statusRadio = 1;
-  int papelHigienicoRadio = 2;
-  int papelToalhaRadio = 3;
-  int piaRadio = 4;
-  int saboneteRadio = 5;
-  int privadaRadio = 6;
+  int statusRadio = 0;
+  int papelHigienicoRadio = 1;
+  int papelToalhaRadio = 0;
+  int piaRadio = 0;
+  int saboneteRadio = 0;
+  int privadaRadio = 0;
 
   int privadasDefeituosas = 0;
   int piasDefeituosas = 0;

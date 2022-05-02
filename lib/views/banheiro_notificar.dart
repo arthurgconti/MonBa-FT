@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'form_notificar.dart';
 
 class BanheiroNotificarScreen extends StatefulWidget {
-  const BanheiroNotificarScreen({Key? key}) : super(key: key);
+  String bathroomName;
+  BanheiroNotificarScreen(this.bathroomName, {Key? key}) : super(key: key);
 
   @override
   State<BanheiroNotificarScreen> createState() =>
@@ -20,9 +21,10 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
         key: _formKey,
         child: Expanded(
           child: ListView(children: [
-            const Card(
+            Card(
                 child: ListTile(
-                    title: Text('PA'), leading: Icon(Icons.location_on))),
+                    title: Text(widget.bathroomName),
+                    leading: const Icon(Icons.location_on))),
             const Divider(),
             Card(
                 child: ExpansionTile(
@@ -32,9 +34,12 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                 Row(
                   children: [
                     Radio(
-                      value: true,
+                      value: 0,
                       groupValue: formNotificar.statusRadio,
-                      onChanged: (value) {},
+                      onChanged: (int? value) {
+                        if (value != null)
+                          setState(() => formNotificar.statusRadio = value);
+                      },
                     ),
                     const Text("Interditado")
                   ],
@@ -42,9 +47,12 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                 Row(
                   children: [
                     Radio(
-                        value: "Parcialmente Interditado",
+                        value: 1,
                         groupValue: formNotificar.statusRadio,
-                        onChanged: (value) {}),
+                        onChanged: (int? value) {
+                          if (value != null)
+                            setState(() => formNotificar.statusRadio = value);
+                        }),
                     const Text("Parcialmente Interditado")
                   ],
                 ),
@@ -58,9 +66,13 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                 Row(
                   children: [
                     Radio(
-                      value: true,
+                      value: 0,
                       groupValue: formNotificar.papelHigienicoRadio,
-                      onChanged: (value) {},
+                      onChanged: (int? value) {
+                        if (value != null)
+                          setState(
+                              () => formNotificar.papelHigienicoRadio = value);
+                      },
                     ),
                     const Text("Em falta")
                   ],

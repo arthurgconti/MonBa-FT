@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:monba_ft/enum/Status_enum.dart';
 import 'package:monba_ft/views/banheiro_notificar.dart';
 import 'package:monba_ft/views/banheiro_resolver.dart';
 
 class BanheiroDetalhesScreen extends StatefulWidget {
-  const BanheiroDetalhesScreen({Key? key}) : super(key: key);
+  var bathroom;
+  BanheiroDetalhesScreen(this.bathroom, {Key? key});
 
   @override
   State<BanheiroDetalhesScreen> createState() => _BanheiroDetalhesScreenState();
@@ -11,8 +13,6 @@ class BanheiroDetalhesScreen extends StatefulWidget {
 
 class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
   var _currentScreen = 0;
-  var _piaDefeituosa = true;
-  var _privadaDefeituosa = false;
 
   Widget banheiroDetalhes() {
     return Row(children: [
@@ -20,11 +20,12 @@ class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
           margin: const EdgeInsets.only(right: 10, left: 10),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(35),
-              border: Border.all(color: Color.fromARGB(255, 189, 224, 56), width: 3.5)),
+              border: Border.all(
+                  color: Color.fromARGB(255, 189, 224, 56), width: 3.5)),
           child: ClipRRect(
               borderRadius: BorderRadius.circular(30),
               child: Image.asset(
-                'assets/images/banheiro.jpg',
+                widget.bathroom.imagePath,
                 width: 300,
                 height: 300,
                 fit: BoxFit.cover,
@@ -33,12 +34,21 @@ class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
           child: ListView(
         padding: const EdgeInsets.only(top: 30),
         children: <Widget>[
-          const Card(
+          Card(
               child: ListTile(
-                  title: Text('PA'), leading: Icon(Icons.location_on))),
-          const Card(
+                  title: Text(widget.bathroom.location),
+                  leading: const Icon(Icons.location_on))),
+          Card(
               child: ListTile(
-                  title: Text('Interditado'), leading: Icon(Icons.info))),
+                  title: Text(widget.bathroom.strStatus),
+                  leading: Icon(
+                    Icons.info,
+                    color: widget.bathroom.status == enm_status.totalmente
+                        ? (Colors.redAccent)
+                        : (widget.bathroom.status == enm_status.parcial
+                            ? Colors.amber
+                            : Colors.lightGreen),
+                  ))),
           const Divider(),
           const Card(
               child: ListTile(
@@ -64,33 +74,40 @@ class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
             title: const Text('Pia'),
             leading: const Icon(Icons.countertops),
             children: [
-              const ListTile(
-                title: Text('Quantidade: 2'),
+              ListTile(
+                title: Text('Quantidade: ${widget.bathroom.sinkQuantity}'),
               ),
               ListTile(
                 title: const Text('Pia defeituosa'),
                 trailing: Icon(
-                  _piaDefeituosa ? Icons.task_alt : Icons.block,
-                  color: _piaDefeituosa ? Colors.redAccent : Colors.lightGreen,
+                  widget.bathroom.defectiveSink ? Icons.task_alt : Icons.block,
+                  color: widget.bathroom.defectiveSink
+                      ? Colors.redAccent
+                      : Colors.lightGreen,
                 ),
               ),
-              if (_piaDefeituosa)
-                const ListTile(
-                  title: Text('Quantidade de pias com defeito: 1'),
+              if (widget.bathroom.defectiveSink)
+                ListTile(
+                  title: Text(
+                      'Quantidade de pias com defeito: ${widget.bathroom.quantityDefectiveSink}'),
                 )
             ],
           )),
-          const Card(
+          Card(
               child: ExpansionTile(
-            title: Text('Sabonete'),
-            leading: Icon(Icons.soap),
+            title: const Text('Sabonete'),
+            leading: const Icon(Icons.soap),
             children: [
-              ListTile(title: Text('Quantidade de suportes: 2')),
               ListTile(
-                title: Text('Disponibilidade'),
+                  title: Text(
+                      'Quantidade de suportes: ${widget.bathroom.quantitySoapSupport}')),
+              ListTile(
+                title: const Text('Disponibilidade'),
                 trailing: Icon(
-                  Icons.block,
-                  color: Colors.redAccent,
+                  widget.bathroom.soap ? Icons.task_alt : Icons.block,
+                  color: widget.bathroom.soap
+                      ? Colors.lightGreen
+                      : Colors.redAccent,
                 ),
               ),
             ],
@@ -106,14 +123,18 @@ class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
               ListTile(
                 title: const Text('Privadas defeituosas'),
                 trailing: Icon(
-                  _privadaDefeituosa ? Icons.task_alt : Icons.block,
-                  color:
-                      _privadaDefeituosa ? Colors.redAccent : Colors.lightGreen,
+                  widget.bathroom.defectiveToilet
+                      ? Icons.task_alt
+                      : Icons.block,
+                  color: widget.bathroom.defectiveToilet
+                      ? Colors.redAccent
+                      : Colors.lightGreen,
                 ),
               ),
-              if (_privadaDefeituosa)
-                const ListTile(
-                  title: Text('Quantidade de privadas com defeito: 1'),
+              if (widget.bathroom.defectiveToilet)
+                ListTile(
+                  title: Text(
+                      'Quantidade de privadas com defeito: ${widget.bathroom.quantityDefectiveToilet}'),
                 )
             ],
           ))
@@ -125,11 +146,15 @@ class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(backgroundColor: const Color.fromARGB(255, 189, 224, 56)),
-        body: IndexedStack(index: _currentScreen, children: [banheiroDetalhes(), BanheiroNotificarScreen(), BanheiroResolverScreen()]),
+        appBar:
+            AppBar(backgroundColor: const Color.fromARGB(255, 189, 224, 56)),
+        body: IndexedStack(index: _currentScreen, children: [
+          banheiroDetalhes(),
+          BanheiroNotificarScreen(widget.bathroom.location),
+          BanheiroResolverScreen(widget.bathroom.location)
+        ]),
         backgroundColor: Color.fromARGB(255, 223, 223, 223),
         bottomNavigationBar: BottomNavigationBar(
-          
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.feed), label: "De talhes"),
             BottomNavigationBarItem(

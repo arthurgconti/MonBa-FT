@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:monba_ft/enum/Status_enum.dart';
+import 'package:monba_ft/model/banheiroBiblioteca.dart';
+import 'package:monba_ft/model/banheiroPA.dart';
 
+import '../model/banheiro.dart';
+import '../model/banheiroBandeco.dart';
+import '../model/banheiroLP.dart';
 import 'banheiro_detalhes.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,6 +16,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final BanheiroPA _banheiroPA =
+      BanheiroPA(enm_status.parcial, true, true, false, 0, true, false, 0);
+  final BanheiroLP _banheiroLP = BanheiroLP(
+      enm_status.naoInterditado, true, true, false, 0, true, false, 0);
+
+  final BanheiroBandeco _banheiroBandeco = BanheiroBandeco(
+      enm_status.totalmente, true, true, false, 0, true, false, 0);
+
+  final BanheiroBiblioteca _banheiroBiblioteca = BanheiroBiblioteca(
+      enm_status.naoInterditado, true, true, false, 0, true, false, 0);
+
   int _selected = 1;
   void setSelected({int value = 1}) {
     if (value == 1) {
@@ -32,9 +49,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget bathroomImagesButton(
-      String image1, String image2, BuildContext context,
-      {String nameBath1 = "", String nameBath2 = "",}) {
-        
+    BuildContext context, {
+    required Banheiro leftBathroom,
+    required Banheiro rightBathroom,
+  }) {
     return Row(children: [
       ElevatedButton(
           style: ElevatedButton.styleFrom(
@@ -43,48 +61,63 @@ class _HomeScreenState extends State<HomeScreen> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const BanheiroDetalhesScreen()));
+                    builder: (context) =>
+                        BanheiroDetalhesScreen(leftBathroom)));
           },
           child: Column(
             children: [
               Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(55),
-                      border: Border.all(color: Color.fromARGB(255, 189, 224, 56), width: 6)),
+                      border: Border.all(
+                          color: const Color.fromARGB(255, 189, 224, 56),
+                          width: 6)),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(49),
                       child: Image.asset(
-                        image1,
+                        leftBathroom.imagePath,
                         width: 200,
                         height: 200,
+                        fit: BoxFit.cover,
                       ))),
-              Text(nameBath1)
+              Text(leftBathroom.location,
+                  style: const TextStyle(color: Colors.black))
             ],
           )),
       ElevatedButton(
           style: ElevatedButton.styleFrom(
               primary: Colors.transparent, shadowColor: Colors.transparent),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        BanheiroDetalhesScreen(rightBathroom)));
+          },
           child: Column(
             children: [
               Container(
+                margin: const EdgeInsets.only(top: 10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(55),
-                    border: Border.all(color: Color.fromARGB(255, 189, 224, 56), width: 6)),
+                    border: Border.all(
+                        color: Color.fromARGB(255, 189, 224, 56), width: 6)),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(49),
                   child: Column(
                     children: [
                       Image.asset(
-                        image2,
+                        rightBathroom.imagePath,
                         width: 200,
                         height: 200,
+                        fit: BoxFit.cover,
                       ),
                     ],
                   ),
                 ),
               ),
-              Text(nameBath2)
+              Text(rightBathroom.location,
+                  style: const TextStyle(color: Colors.black))
             ],
           ))
     ]);
@@ -106,11 +139,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(_banheiroLP.location);
     return Scaffold(
         appBar: AppBar(
             backgroundColor: Color.fromARGB(255, 189, 224, 56),
             centerTitle: true,
-            title: Text(
+            title: const Text(
               'MonBa-FT  |  HOME',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -149,17 +183,16 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 25.0),
             Row(
               children: [
-                bathroomImagesButton('assets/images/banheiro.jpg',
-                    'assets/images/banheiro.jpg', context,
-                    nameBath1: 'PA', nameBath2: 'LP')
+                bathroomImagesButton(context,
+                    leftBathroom: _banheiroPA, rightBathroom: _banheiroLP)
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ),
             Row(
               children: [
-                bathroomImagesButton('assets/images/banheiro.jpg',
-                    'assets/images/banheiro.jpg', context,
-                    nameBath1: 'Bandeco', nameBath2: 'Biblioteca')
+                bathroomImagesButton(context,
+                    leftBathroom: _banheiroBandeco,
+                    rightBathroom: _banheiroBiblioteca)
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ),

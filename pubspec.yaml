@@ -64,6 +64,15 @@ flutter:
     - assets/images/banheiro.jpg
     - assets/images/banheiro2.jpg
 
+    - assets/images/banheiroBandeco.jpeg
+    - assets/images/banheiroBandeco2.jpeg
+    - assets/images/banheiroPA.jpeg
+    - assets/images/banheiroPA2.jpeg
+    - assets/images/banheiroLP.jpeg
+    - assets/images/banheiroLP2.jpeg
+    - assets/images/banheiroBiblioteca.jpeg
+    - assets/images/banheiroBiblioteca2.jpeg
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
