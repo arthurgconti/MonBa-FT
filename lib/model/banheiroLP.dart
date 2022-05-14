@@ -25,4 +25,6 @@ class BanheiroLP extends Banheiro {
             2,
             defectiveToilet,
             quantityDefectiveToilet) {}
+
+  BanheiroLP.fromMap(map) : super.fromMap(map);
 }

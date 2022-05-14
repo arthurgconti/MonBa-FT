@@ -1,25 +1,40 @@
 import '../enum/statusEnum.dart';
 
 abstract class Banheiro {
-  String imagePath = '';
+  String _imagePath = '';
 
-  String location = '';
-  String strStatus = '';
-  enm_status status = enm_status.naoInterditado;
+  String _location = '';
+  String _strStatus = '';
+  enm_status _status = enm_status.naoInterditado;
 
-  bool toiletPaper = true;
-  bool towelPaper = true;
+  bool _toiletPaper = true;
+  bool _towelPaper = true;
 
-  int sinkQuantity = 1;
-  bool defectiveSink = false;
-  int quantityDefectiveSink = 0;
+  int _sinkQuantity = 1;
+  bool _defectiveSink = false;
+  int _quantityDefectiveSink = 0;
 
-  bool soap = true;
-  int quantitySoapSupport = 1;
+  bool _soap = true;
+  int _quantitySoapSupport = 1;
 
-  int toiletQuantity = 1;
-  bool defectiveToilet = false;
-  int quantityDefectiveToilet = 0;
+  int _toiletQuantity = 1;
+  bool _defectiveToilet = false;
+  int _quantityDefectiveToilet = 0;
+
+  String get getImagePath => _imagePath;
+  String get getLocation => _location;
+  String get getStrStatus => _strStatus;
+  enm_status get getStatus => _status;
+  bool get getToiletPaper => _toiletPaper;
+  bool get getTowelPaper => _towelPaper;
+  int get getSinkQuantity => _sinkQuantity;
+  bool get getDefectiveSink => _defectiveSink;
+  int get getQuantityDefectiveSink => _quantityDefectiveSink;
+  bool get getSoap => _soap;
+  int get getQuantitySoapSupport => _quantitySoapSupport;
+  int get getToiletQuantity => _toiletQuantity;
+  bool get getDefectiveToilet => _defectiveToilet;
+  int get getQuantityDefectiveToilet => _quantityDefectiveToilet;
 
   Banheiro(
       String bathImagePath,
@@ -35,30 +50,66 @@ abstract class Banheiro {
       int bathToiletQuantity,
       bool bathDefectiveToilet,
       int bathQuantityDefectiveToilet) {
-    imagePath = bathImagePath;
-    location = bathLocation;
-    status = bathStatus;
-    toiletPaper = bathToiletPaper;
-    towelPaper = bathTowelPaper;
-    sinkQuantity = bathSinkQuantity;
-    defectiveSink = bathDefectiveSink;
-    quantityDefectiveSink = bathQuantityDefectiveSink;
-    soap = bathSoap;
-    quantitySoapSupport = bathQuantitySoapSupport;
-    toiletQuantity = bathToiletQuantity;
-    defectiveToilet = bathDefectiveToilet;
-    quantityDefectiveToilet = bathQuantityDefectiveToilet;
+    _imagePath = bathImagePath;
+    _location = bathLocation;
+    _status = bathStatus;
+    _toiletPaper = bathToiletPaper;
+    _towelPaper = bathTowelPaper;
+    _sinkQuantity = bathSinkQuantity;
+    _defectiveSink = bathDefectiveSink;
+    _quantityDefectiveSink = bathQuantityDefectiveSink;
+    _soap = bathSoap;
+    _quantitySoapSupport = bathQuantitySoapSupport;
+    _toiletQuantity = bathToiletQuantity;
+    _defectiveToilet = bathDefectiveToilet;
+    _quantityDefectiveToilet = bathQuantityDefectiveToilet;
 
     switch (bathStatus) {
       case enm_status.parcial:
-        strStatus = "Parcialmente interditado";
+        _strStatus = "Parcialmente interditado";
         break;
       case enm_status.totalmente:
-        strStatus = "Interditado";
+        _strStatus = "Interditado";
         break;
       default:
-        strStatus = "Não interditado";
+        _strStatus = "Não interditado";
         break;
     }
+  }
+
+  Banheiro.fromMap(map) {
+    _imagePath = map["imagePath"];
+    _location = map["location"];
+    _status = map["status"];
+    _strStatus = map["str_status"];
+    _toiletPaper = map["toiletPaper"];
+    _towelPaper = map["towelPaper"];
+    _sinkQuantity = map["sinkQuantity"];
+    _defectiveSink = map["defectiveSink"];
+    _quantityDefectiveSink = map["quantityDefectiveSink"];
+    _soap = map["soap"];
+    _quantitySoapSupport = map["quantitySoapSupport"];
+    _toiletQuantity = map["toiletQuantity"];
+    _defectiveToilet = map["defectiveToilet"];
+    _quantityDefectiveToilet = map["quantityDefectiveToilet"];
+  }
+
+  toMap() {
+    var map = Map<String, dynamic>();
+    map["imagePath"] = _imagePath;
+    map["location"] = _location;
+    map["status"] = _status;
+    map["str_status"] = _strStatus;
+    map["toiletPaper"] = _toiletPaper;
+    map["towelPaper"] = _towelPaper;
+    map["sinkQuantity"] = _sinkQuantity;
+    map["defectiveSink"] = _defectiveSink;
+    map["quantityDefectiveSink"] = _quantityDefectiveSink;
+    map["soap"] = _soap;
+    map["quantitySoapSupport"] = _quantitySoapSupport;
+    map["toiletQuantity"] = _toiletQuantity;
+    map["defectiveToilet"] = _defectiveToilet;
+    map["quantityDefectiveToilet"] = _quantityDefectiveToilet;
+    return map;
   }
 }

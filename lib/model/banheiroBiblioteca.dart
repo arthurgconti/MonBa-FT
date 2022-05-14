@@ -25,4 +25,6 @@ class BanheiroBiblioteca extends Banheiro {
             2,
             defectiveToilet,
             quantityDefectiveToilet);
+
+  BanheiroBiblioteca.fromMap(map) : super.fromMap(map);
 }

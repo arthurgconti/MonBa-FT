@@ -25,7 +25,7 @@ class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
           child: ClipRRect(
               borderRadius: BorderRadius.circular(30),
               child: Image.asset(
-                widget.bathroom.imagePath,
+                widget.bathroom.getImagePath,
                 width: 300,
                 height: 300,
                 fit: BoxFit.cover,
@@ -36,16 +36,16 @@ class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
         children: <Widget>[
           Card(
               child: ListTile(
-                  title: Text(widget.bathroom.location),
+                  title: Text(widget.bathroom.getLocation),
                   leading: const Icon(Icons.location_on))),
           Card(
               child: ListTile(
-                  title: Text(widget.bathroom.strStatus),
+                  title: Text(widget.bathroom.getStrStatus),
                   leading: Icon(
                     Icons.info,
-                    color: widget.bathroom.status == enm_status.totalmente
+                    color: widget.bathroom.getStatus == enm_status.totalmente
                         ? (Colors.redAccent)
-                        : (widget.bathroom.status == enm_status.parcial
+                        : (widget.bathroom.getStatus == enm_status.parcial
                             ? Colors.amber
                             : Colors.lightGreen),
                   ))),
@@ -75,21 +75,23 @@ class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
             leading: const Icon(Icons.countertops),
             children: [
               ListTile(
-                title: Text('Quantidade: ${widget.bathroom.sinkQuantity}'),
+                title: Text('Quantidade: ${widget.bathroom.getSinkQuantity}'),
               ),
               ListTile(
                 title: const Text('Pia defeituosa'),
                 trailing: Icon(
-                  widget.bathroom.defectiveSink ? Icons.task_alt : Icons.block,
-                  color: widget.bathroom.defectiveSink
+                  widget.bathroom.getDefectiveSink
+                      ? Icons.task_alt
+                      : Icons.block,
+                  color: widget.bathroom.getDefectiveSink
                       ? Colors.redAccent
                       : Colors.lightGreen,
                 ),
               ),
-              if (widget.bathroom.defectiveSink)
+              if (widget.bathroom.getDefectiveSink)
                 ListTile(
                   title: Text(
-                      'Quantidade de pias com defeito: ${widget.bathroom.quantityDefectiveSink}'),
+                      'Quantidade de pias com defeito: ${widget.bathroom.getQuantityDefectiveSink}'),
                 )
             ],
           )),
@@ -100,12 +102,12 @@ class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
             children: [
               ListTile(
                   title: Text(
-                      'Quantidade de suportes: ${widget.bathroom.quantitySoapSupport}')),
+                      'Quantidade de suportes: ${widget.bathroom.getQuantitySoapSupport}')),
               ListTile(
                 title: const Text('Disponibilidade'),
                 trailing: Icon(
-                  widget.bathroom.soap ? Icons.task_alt : Icons.block,
-                  color: widget.bathroom.soap
+                  widget.bathroom.getSoap ? Icons.task_alt : Icons.block,
+                  color: widget.bathroom.getSoap
                       ? Colors.lightGreen
                       : Colors.redAccent,
                 ),
@@ -117,24 +119,24 @@ class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
             title: const Text('Privada'),
             leading: const Icon(Icons.event_seat),
             children: [
-              const ListTile(
-                title: Text('Quantidade: 2'),
+              ListTile(
+                title: Text('Quantidade: ${widget.bathroom.getToiletQuantity}'),
               ),
               ListTile(
                 title: const Text('Privadas defeituosas'),
                 trailing: Icon(
-                  widget.bathroom.defectiveToilet
+                  widget.bathroom.getDefectiveToilet
                       ? Icons.task_alt
                       : Icons.block,
-                  color: widget.bathroom.defectiveToilet
+                  color: widget.bathroom.getDefectiveToilet
                       ? Colors.redAccent
                       : Colors.lightGreen,
                 ),
               ),
-              if (widget.bathroom.defectiveToilet)
+              if (widget.bathroom.getDefectiveToilet)
                 ListTile(
                   title: Text(
-                      'Quantidade de privadas com defeito: ${widget.bathroom.quantityDefectiveToilet}'),
+                      'Quantidade de privadas com defeito: ${widget.bathroom.getQuantityDefectiveToilet}'),
                 )
             ],
           ))
@@ -150,8 +152,8 @@ class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
             AppBar(backgroundColor: const Color.fromARGB(255, 189, 224, 56)),
         body: IndexedStack(index: _currentScreen, children: [
           banheiroDetalhes(),
-          BanheiroNotificarScreen(widget.bathroom.location),
-          BanheiroResolverScreen(widget.bathroom.location)
+          BanheiroNotificarScreen(widget.bathroom.getLocation),
+          BanheiroResolverScreen(widget.bathroom.getLocation)
         ]),
         backgroundColor: Color.fromARGB(255, 223, 223, 223),
         bottomNavigationBar: BottomNavigationBar(

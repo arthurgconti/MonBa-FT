@@ -75,12 +75,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(49),
                       child: Image.asset(
-                        leftBathroom.imagePath,
+                        leftBathroom.getImagePath,
                         width: 200,
                         height: 200,
                         fit: BoxFit.cover,
                       ))),
-              Text(leftBathroom.location,
+              Text(leftBathroom.getLocation,
                   style: const TextStyle(color: Colors.black))
             ],
           )),
@@ -107,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       Image.asset(
-                        rightBathroom.imagePath,
+                        rightBathroom.getImagePath,
                         width: 200,
                         height: 200,
                         fit: BoxFit.cover,
@@ -116,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              Text(rightBathroom.location,
+              Text(rightBathroom.getLocation,
                   style: const TextStyle(color: Colors.black))
             ],
           ))
