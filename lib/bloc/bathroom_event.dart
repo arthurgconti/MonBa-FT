@@ -1,4 +1,5 @@
 import 'package:monba_ft/model/banheiro.dart';
+import 'package:monba_ft/model/banheiros.dart';
 
 abstract class BathroomEvent {}
 
@@ -15,3 +16,8 @@ class UpdateBathroomEvent extends BathroomEvent {
 }
 
 class UpdateCancel extends BathroomEvent {}
+
+class GetBathrooms extends BathroomEvent {
+  BathroomCollection bathrooms;
+  GetBathrooms({required this.bathrooms});
+}

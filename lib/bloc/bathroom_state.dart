@@ -1,4 +1,5 @@
 import 'package:monba_ft/model/banheiro.dart';
+import 'package:monba_ft/model/banheiros.dart';
 
 abstract class BathroomState {}
 

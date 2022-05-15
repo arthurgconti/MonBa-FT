@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:monba_ft/enum/statusEnum.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:monba_ft/bloc/bathroom_monitor_bloc.dart';
+import 'package:monba_ft/bloc/bathroom_monitor_event.dart';
 import 'package:monba_ft/model/banheiroBiblioteca.dart';
 import 'package:monba_ft/model/banheiroPA.dart';
+import 'package:monba_ft/provider/rest_provider.dart';
 
+import '../bloc/bathroom_monitor_state.dart';
 import '../model/banheiro.dart';
 import '../model/banheiroBandeco.dart';
 import '../model/banheiroLP.dart';
+import '../model/banheiros.dart';
 import 'banheiro_detalhes.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,17 +21,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final BanheiroPA _banheiroPA =
-      BanheiroPA(enm_status.parcial, true, true, false, 0, true, false, 0);
-  final BanheiroLP _banheiroLP = BanheiroLP(
-      enm_status.naoInterditado, true, true, false, 0, true, false, 0);
-
-  final BanheiroBandeco _banheiroBandeco = BanheiroBandeco(
-      enm_status.totalmente, true, true, false, 0, true, false, 0);
-
-  final BanheiroBiblioteca _banheiroBiblioteca = BanheiroBiblioteca(
-      enm_status.naoInterditado, true, true, false, 0, true, false, 0);
-
   int _selected = 1;
   void setSelected({int value = 1}) {
     if (value == 1) {
@@ -139,6 +133,52 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<BathroomMonitorBloc, BathroomMonitorState>(
+        builder: (context, state) {
+      return mainMenu(state.bathrooms);
+    });
+  }
+
+  Widget mainMenu(BathroomCollection bathrooms) {
+    BanheiroPA _banheiroPA = BanheiroPA(
+        bathrooms.bathroom(0).getStatus,
+        bathrooms.bathroom(0).getToiletPaper,
+        bathrooms.bathroom(0).getTowelPaper,
+        bathrooms.bathroom(0).getDefectiveSink,
+        bathrooms.bathroom(0).getQuantityDefectiveSink,
+        bathrooms.bathroom(0).getSoap,
+        bathrooms.bathroom(0).getDefectiveToilet,
+        bathrooms.bathroom(0).getQuantityDefectiveToilet);
+    BanheiroLP _banheiroLP = BanheiroLP(
+        bathrooms.bathroom(1).getStatus,
+        bathrooms.bathroom(1).getToiletPaper,
+        bathrooms.bathroom(1).getTowelPaper,
+        bathrooms.bathroom(1).getDefectiveSink,
+        bathrooms.bathroom(1).getQuantityDefectiveSink,
+        bathrooms.bathroom(1).getSoap,
+        bathrooms.bathroom(1).getDefectiveToilet,
+        bathrooms.bathroom(1).getQuantityDefectiveToilet);
+
+    BanheiroBandeco _banheiroBandeco = BanheiroBandeco(
+        bathrooms.bathroom(2).getStatus,
+        bathrooms.bathroom(2).getToiletPaper,
+        bathrooms.bathroom(2).getTowelPaper,
+        bathrooms.bathroom(2).getDefectiveSink,
+        bathrooms.bathroom(2).getQuantityDefectiveSink,
+        bathrooms.bathroom(2).getSoap,
+        bathrooms.bathroom(2).getDefectiveToilet,
+        bathrooms.bathroom(2).getQuantityDefectiveToilet);
+
+    BanheiroBiblioteca _banheiroBiblioteca = BanheiroBiblioteca(
+        bathrooms.bathroom(3).getStatus,
+        bathrooms.bathroom(3).getToiletPaper,
+        bathrooms.bathroom(3).getTowelPaper,
+        bathrooms.bathroom(3).getDefectiveSink,
+        bathrooms.bathroom(3).getQuantityDefectiveSink,
+        bathrooms.bathroom(3).getSoap,
+        bathrooms.bathroom(3).getDefectiveToilet,
+        bathrooms.bathroom(3).getQuantityDefectiveToilet);
+
     return Scaffold(
         appBar: AppBar(
             backgroundColor: Color.fromARGB(255, 189, 224, 56),

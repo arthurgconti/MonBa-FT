@@ -1,6 +1,6 @@
 import '../enum/statusEnum.dart';
 
-abstract class Banheiro {
+class Banheiro {
   String _imagePath = '';
 
   String _location = '';
@@ -80,7 +80,6 @@ abstract class Banheiro {
   Banheiro.fromMap(map) {
     _imagePath = map["imagePath"];
     _location = map["location"];
-    _status = map["status"];
     _strStatus = map["str_status"];
     _toiletPaper = map["toiletPaper"];
     _towelPaper = map["towelPaper"];
@@ -92,13 +91,22 @@ abstract class Banheiro {
     _toiletQuantity = map["toiletQuantity"];
     _defectiveToilet = map["defectiveToilet"];
     _quantityDefectiveToilet = map["quantityDefectiveToilet"];
+
+    if (_strStatus == "Parcialmente interditado") {
+      _status = enm_status.parcial;
+    } else if (_strStatus == "Interditado") {
+      _status = enm_status.totalmente;
+    } else if (_strStatus == "Não interditado") {
+      _status = enm_status.naoInterditado;
+    } else {
+      _status = enm_status.nenhum;
+    }
   }
 
   toMap() {
     var map = Map<String, dynamic>();
     map["imagePath"] = _imagePath;
     map["location"] = _location;
-    map["status"] = _status;
     map["str_status"] = _strStatus;
     map["toiletPaper"] = _toiletPaper;
     map["towelPaper"] = _towelPaper;
