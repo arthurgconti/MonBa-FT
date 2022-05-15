@@ -9,7 +9,7 @@ class User {
   String get getName => _name;
   String get getRa => _ra;
   String get getEmail => _email;
-  String get getcellphone => _cellphone;
+  String get getCellphone => _cellphone;
   String get getUsername => _username;
   String get getPassword => _password;
 
@@ -25,7 +25,7 @@ class User {
     _email = email;
   }
 
-  set setcellphone(cellphone) {
+  set setCellphone(cellphone) {
     _cellphone = cellphone;
   }
 
@@ -44,5 +44,27 @@ class User {
     _cellphone = cellphone;
     _username = username;
     _password = password;
+  }
+
+  User.fromMap(map) {
+    _name = map["name"];
+    _ra = map["ra"];
+    _email = map["email"];
+    _cellphone = map["cellphone"];
+    _username = map["username"];
+    _password = map["password"];
+  }
+
+  toMap() {
+    var map = Map<String, dynamic>();
+
+    map["name"] = _name;
+    map["ra"] = _ra;
+    map["email"] = _email;
+    map["cellphone"] = _cellphone;
+    map["username"] = _username;
+    map["password"] = _password;
+
+    return map;
   }
 }

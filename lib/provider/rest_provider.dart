@@ -36,12 +36,13 @@ class RestServer {
 
   Future<int> updateUser(userId, User user) async {
     Response response =
-        await _dio.put(prefixUrl + userId + suffixUrl, data: user);
+        await _dio.put(prefixUrl + userId + suffixUrl, data: user.toMap());
     return 42;
   }
 
-  Future<String> insertUser(User user) async {
-    Response response = await _dio.post(prefixUrl + suffixUrl, data: user);
-    return response.data;
+  Future<int?> insertUser(User user) async {
+    Response response =
+        await _dio.post(prefixUrl + suffixUrl, data: user.toMap());
+    return response.statusCode;
   }
 }

@@ -1,5 +1,3 @@
-import 'package:monba_ft/model/banheiro.dart';
-
 import '../model/usuario.dart';
 
 abstract class UserState {}
