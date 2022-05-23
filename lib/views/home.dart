@@ -195,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Container(
             child: Column(
           children: [
-            SizedBox(height: 25.0),
+            SizedBox(height: 15.0),
             const Text(
               'Banheiros',
               style: TextStyle(
@@ -203,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 fontSize: 25,
               ),
             ),
-            SizedBox(height: 25.0),
+            SizedBox(height: 15.0),
             Row(
               children: [
                 customRadioButton(
