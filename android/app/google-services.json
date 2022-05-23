@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "937053947909",
+    "firebase_url": "https://monba-ft-default-rtdb.firebaseio.com",
+    "project_id": "monba-ft",
+    "storage_bucket": "monba-ft.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:937053947909:android:6ce6447b92bbaa6c64f46c",
+        "android_client_info": {
+          "package_name": "com.example.monba_ft"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "937053947909-etagr7vmsu53pqjs70fkujnqmvbf4gfe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkLEQzTFbEGp0WlamWpdXqsCcMFLCXuLY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "937053947909-etagr7vmsu53pqjs70fkujnqmvbf4gfe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
