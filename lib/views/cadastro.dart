@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:monba_ft/bloc/auth_event.dart';
 import 'package:monba_ft/bloc/user_bloc.dart';
 import 'package:monba_ft/bloc/user_event.dart';
 import 'package:monba_ft/views/home.dart';
+import '../bloc/auth_bloc.dart';
 import '../bloc/user_state.dart';
 import '../model/usuario.dart';
 import 'login.dart';
@@ -107,9 +109,8 @@ class CadastroScreen extends StatelessWidget {
                                 }
                                 if (!regex.hasMatch(value)) {
                                   return "Email precisa ser da unicamp";
-                                } else {
-                                  return null;
                                 }
+                                return null;
                               },
                               onSaved: (value) {
                                 user.setEmail = value!;
@@ -122,7 +123,7 @@ class CadastroScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(height: 12.0),
+                          const SizedBox(height: 12.0),
                           SizedBox(
                             width: 350,
                             height: 45,
@@ -146,7 +147,7 @@ class CadastroScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(height: 12.0),
+                          const SizedBox(height: 12.0),
                           SizedBox(
                             width: 350,
                             height: 45,
@@ -170,7 +171,7 @@ class CadastroScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(height: 12.0),
+                          const SizedBox(height: 12.0),
                           SizedBox(
                             width: 350,
                             height: 45,
@@ -179,10 +180,12 @@ class CadastroScreen extends StatelessWidget {
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return "Campo não pode estar vazio";
-                                } else {
-                                  user.setPassword = value;
-                                  return null;
                                 }
+                                if (value.length < 6) {
+                                  return "Campo precisa ter ao menos 6 caracteres";
+                                }
+                                user.setPassword = value;
+                                return null;
                               },
                               onSaved: (value) {},
                               obscureText: true,
@@ -194,7 +197,7 @@ class CadastroScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(height: 12.0),
+                          const SizedBox(height: 12.0),
                           SizedBox(
                             width: 350,
                             height: 45,
@@ -220,11 +223,11 @@ class CadastroScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(height: 12.0),
+                          const SizedBox(height: 12.0),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Color.fromARGB(255, 189, 224, 56),
-                              shadowColor: Color.fromARGB(255, 0, 0, 0),
+                              primary: const Color.fromARGB(255, 189, 224, 56),
+                              shadowColor: const Color.fromARGB(255, 0, 0, 0),
                               minimumSize: const Size(200, 50),
                               maximumSize: const Size(200, 50),
                             ),
@@ -233,6 +236,10 @@ class CadastroScreen extends StatelessWidget {
                                 _formKey.currentState!.save();
                                 BlocProvider.of<UserBloc>(context)
                                     .add(SubmitUserEvent(user: user));
+                                BlocProvider.of<AuthBloc>(context).add(
+                                    RegisterUser(
+                                        email: user.getEmail,
+                                        password: user.getPassword));
                                 _formKey.currentState!.reset();
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
