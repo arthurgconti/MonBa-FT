@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monba_ft/bloc/bathroom_monitor_bloc.dart';
-import 'package:monba_ft/bloc/bathroom_monitor_event.dart';
+import 'package:monba_ft/enum/statusEnum.dart';
 import 'package:monba_ft/model/banheiroBiblioteca.dart';
 import 'package:monba_ft/model/banheiroPA.dart';
-import 'package:monba_ft/provider/rest_provider.dart';
 
 import '../bloc/bathroom_monitor_state.dart';
 import '../model/banheiro.dart';
@@ -140,44 +139,61 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget mainMenu(BathroomCollection bathrooms) {
-    BanheiroPA _banheiroPA = BanheiroPA(
-        bathrooms.bathroom(0).getStatus,
-        bathrooms.bathroom(0).getToiletPaper,
-        bathrooms.bathroom(0).getTowelPaper,
-        bathrooms.bathroom(0).getDefectiveSink,
-        bathrooms.bathroom(0).getQuantityDefectiveSink,
-        bathrooms.bathroom(0).getSoap,
-        bathrooms.bathroom(0).getDefectiveToilet,
-        bathrooms.bathroom(0).getQuantityDefectiveToilet);
-    BanheiroLP _banheiroLP = BanheiroLP(
-        bathrooms.bathroom(1).getStatus,
-        bathrooms.bathroom(1).getToiletPaper,
-        bathrooms.bathroom(1).getTowelPaper,
-        bathrooms.bathroom(1).getDefectiveSink,
-        bathrooms.bathroom(1).getQuantityDefectiveSink,
-        bathrooms.bathroom(1).getSoap,
-        bathrooms.bathroom(1).getDefectiveToilet,
-        bathrooms.bathroom(1).getQuantityDefectiveToilet);
+    BanheiroPA _banheiroPA;
+    BanheiroLP _banheiroLP;
+    BanheiroBandeco _banheiroBandeco;
+    BanheiroBiblioteca _banheiroBiblioteca;
 
-    BanheiroBandeco _banheiroBandeco = BanheiroBandeco(
-        bathrooms.bathroom(2).getStatus,
-        bathrooms.bathroom(2).getToiletPaper,
-        bathrooms.bathroom(2).getTowelPaper,
-        bathrooms.bathroom(2).getDefectiveSink,
-        bathrooms.bathroom(2).getQuantityDefectiveSink,
-        bathrooms.bathroom(2).getSoap,
-        bathrooms.bathroom(2).getDefectiveToilet,
-        bathrooms.bathroom(2).getQuantityDefectiveToilet);
+    try {
+      _banheiroPA = BanheiroPA(
+          bathrooms.bathroom(0).getStatus,
+          bathrooms.bathroom(0).getToiletPaper,
+          bathrooms.bathroom(0).getTowelPaper,
+          bathrooms.bathroom(0).getDefectiveSink,
+          bathrooms.bathroom(0).getQuantityDefectiveSink,
+          bathrooms.bathroom(0).getSoap,
+          bathrooms.bathroom(0).getDefectiveToilet,
+          bathrooms.bathroom(0).getQuantityDefectiveToilet);
 
-    BanheiroBiblioteca _banheiroBiblioteca = BanheiroBiblioteca(
-        bathrooms.bathroom(3).getStatus,
-        bathrooms.bathroom(3).getToiletPaper,
-        bathrooms.bathroom(3).getTowelPaper,
-        bathrooms.bathroom(3).getDefectiveSink,
-        bathrooms.bathroom(3).getQuantityDefectiveSink,
-        bathrooms.bathroom(3).getSoap,
-        bathrooms.bathroom(3).getDefectiveToilet,
-        bathrooms.bathroom(3).getQuantityDefectiveToilet);
+      _banheiroLP = BanheiroLP(
+          bathrooms.bathroom(1).getStatus,
+          bathrooms.bathroom(1).getToiletPaper,
+          bathrooms.bathroom(1).getTowelPaper,
+          bathrooms.bathroom(1).getDefectiveSink,
+          bathrooms.bathroom(1).getQuantityDefectiveSink,
+          bathrooms.bathroom(1).getSoap,
+          bathrooms.bathroom(1).getDefectiveToilet,
+          bathrooms.bathroom(1).getQuantityDefectiveToilet);
+
+      _banheiroBandeco = BanheiroBandeco(
+          bathrooms.bathroom(2).getStatus,
+          bathrooms.bathroom(2).getToiletPaper,
+          bathrooms.bathroom(2).getTowelPaper,
+          bathrooms.bathroom(2).getDefectiveSink,
+          bathrooms.bathroom(2).getQuantityDefectiveSink,
+          bathrooms.bathroom(2).getSoap,
+          bathrooms.bathroom(2).getDefectiveToilet,
+          bathrooms.bathroom(2).getQuantityDefectiveToilet);
+
+      _banheiroBiblioteca = BanheiroBiblioteca(
+          bathrooms.bathroom(3).getStatus,
+          bathrooms.bathroom(3).getToiletPaper,
+          bathrooms.bathroom(3).getTowelPaper,
+          bathrooms.bathroom(3).getDefectiveSink,
+          bathrooms.bathroom(3).getQuantityDefectiveSink,
+          bathrooms.bathroom(3).getSoap,
+          bathrooms.bathroom(3).getDefectiveToilet,
+          bathrooms.bathroom(3).getQuantityDefectiveToilet);
+    } catch (err) {
+      _banheiroPA =
+          BanheiroPA(enm_status.parcial, true, true, false, 0, true, false, 0);
+      _banheiroLP = BanheiroLP(
+          enm_status.naoInterditado, true, true, false, 0, true, false, 0);
+      _banheiroBandeco = BanheiroBandeco(
+          enm_status.totalmente, true, true, false, 0, true, false, 0);
+      _banheiroBiblioteca = BanheiroBiblioteca(
+          enm_status.naoInterditado, true, true, false, 0, true, false, 0);
+    }
 
     return Scaffold(
         appBar: AppBar(
@@ -195,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Container(
             child: Column(
           children: [
-            SizedBox(height: 15.0),
+            const SizedBox(height: 15.0),
             const Text(
               'Banheiros',
               style: TextStyle(
@@ -203,7 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 fontSize: 25,
               ),
             ),
-            SizedBox(height: 15.0),
+            const SizedBox(height: 15.0),
             Row(
               children: [
                 customRadioButton(
@@ -219,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ),
-            SizedBox(height: 25.0),
+            const SizedBox(height: 25.0),
             Row(
               children: [
                 bathroomImagesButton(context,

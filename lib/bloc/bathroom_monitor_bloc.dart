@@ -7,14 +7,13 @@ import 'bathroom_monitor_state.dart';
 
 class BathroomMonitorBloc
     extends Bloc<BathroomMonitorEvent, BathroomMonitorState> {
-  BathroomCollection bathrooms = BathroomCollection();
-  BathroomMonitorBloc()
-      : super(BathroomMonitorState(bathrooms: BathroomCollection())) {
+  static BathroomCollection bathrooms = BathroomCollection();
+
+  BathroomMonitorBloc() : super(BathroomMonitorState(bathrooms: bathrooms)) {
     on<AskNewList>(((event, emit) async {
       bathrooms = await RestServer.helper.getBathroomList();
       emit(BathroomMonitorState(bathrooms: bathrooms));
     }));
-
     add(AskNewList());
   }
 }
