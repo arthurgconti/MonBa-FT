@@ -1,16 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monba_ft/bloc/bathroom_monitor_bloc.dart';
 import 'package:monba_ft/enum/statusEnum.dart';
 import 'package:monba_ft/model/banheiroBiblioteca.dart';
 import 'package:monba_ft/model/banheiroPA.dart';
+import 'package:monba_ft/bloc/auth_event.dart';
 
+import '../bloc/auth_bloc.dart';
 import '../bloc/bathroom_monitor_state.dart';
 import '../model/banheiro.dart';
 import '../model/banheiroBandeco.dart';
 import '../model/banheiroLP.dart';
 import '../model/banheiros.dart';
 import 'banheiro_detalhes.dart';
+import 'login.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -69,8 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(49),
                       child: Image.asset(
                         leftBathroom.getImagePath,
-                        width: 200,
-                        height: 200,
+                        width: 130,
+                        height: 170,
                         fit: BoxFit.cover,
                       ))),
               Text(leftBathroom.getLocation,
@@ -101,8 +105,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Image.asset(
                         rightBathroom.getImagePath,
-                        width: 200,
-                        height: 200,
+                        width: 130,
+                        height: 170,
                         fit: BoxFit.cover,
                       ),
                     ],
@@ -209,49 +213,78 @@ class _HomeScreenState extends State<HomeScreen> {
             )),
         backgroundColor: Color.fromARGB(255, 223, 223, 223),
         body: Container(
-            child: Column(
-          children: [
-            const SizedBox(height: 15.0),
-            const Text(
-              'Banheiros',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 25,
+          child: Column(
+            children: [
+              const SizedBox(height: 15.0),
+              const Text(
+                'Banheiros',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 25,
+                ),
               ),
-            ),
-            const SizedBox(height: 15.0),
-            Row(
-              children: [
-                customRadioButton(
-                    1,
-                    const Icon(
-                      Icons.man,
-                      color: Colors.white,
-                    )),
-                customRadioButton(
-                    2, const Icon(Icons.accessible, color: Colors.white)),
-                customRadioButton(
-                    3, const Icon(Icons.woman, color: Colors.white)),
-              ],
-              mainAxisAlignment: MainAxisAlignment.center,
-            ),
-            const SizedBox(height: 25.0),
-            Row(
-              children: [
-                bathroomImagesButton(context,
-                    leftBathroom: _banheiroPA, rightBathroom: _banheiroLP)
-              ],
-              mainAxisAlignment: MainAxisAlignment.center,
-            ),
-            Row(
-              children: [
-                bathroomImagesButton(context,
-                    leftBathroom: _banheiroBandeco,
-                    rightBathroom: _banheiroBiblioteca)
-              ],
-              mainAxisAlignment: MainAxisAlignment.center,
-            ),
-          ],
-        )));
+              const SizedBox(height: 15.0),
+              Row(
+                children: [
+                  customRadioButton(
+                      1,
+                      const Icon(
+                        Icons.man,
+                        color: Colors.white,
+                      )),
+                  customRadioButton(
+                      2, const Icon(Icons.accessible, color: Colors.white)),
+                  customRadioButton(
+                      3, const Icon(Icons.woman, color: Colors.white)),
+                ],
+                mainAxisAlignment: MainAxisAlignment.center,
+              ),
+              const SizedBox(height: 25.0),
+              Row(
+                children: [
+                  bathroomImagesButton(context,
+                      leftBathroom: _banheiroPA, rightBathroom: _banheiroLP)
+                ],
+                mainAxisAlignment: MainAxisAlignment.center,
+              ),
+              Row(
+                children: [
+                  bathroomImagesButton(context,
+                      leftBathroom: _banheiroBandeco,
+                      rightBathroom: _banheiroBiblioteca)
+                ],
+                mainAxisAlignment: MainAxisAlignment.center,
+              ),
+              const SizedBox(height: 20.0),
+              Row(
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: const Color.fromARGB(255, 189, 224, 56),
+                      shadowColor: const Color.fromARGB(255, 0, 0, 0),
+                      minimumSize: const Size(115, 40),
+                      maximumSize: const Size(115, 40),
+                    ),
+                    onPressed: () {
+                      BlocProvider.of<AuthBloc>(context).add(
+                                Logout());
+                      Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginScreen()));
+                    },
+                    child: const Text(
+                          'Sair',
+                          style: TextStyle(
+                            // fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        )
+              )],
+                mainAxisAlignment: MainAxisAlignment.center,
+              ),
+            ],
+          ),
+        ));
   }
 }

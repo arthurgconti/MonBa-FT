@@ -17,19 +17,21 @@ class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
   Widget banheiroDetalhes() {
     return Row(children: [
       Container(
-          margin: const EdgeInsets.only(right: 10, left: 10),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(35),
-              border: Border.all(
-                  color: Color.fromARGB(255, 189, 224, 56), width: 3.5)),
-          child: ClipRRect(
-              borderRadius: BorderRadius.circular(30),
-              child: Image.asset(
-                widget.bathroom.getImagePath,
-                width: 300,
-                height: 300,
-                fit: BoxFit.cover,
-              ))),
+          // margin: const EdgeInsets.only(right: 10, left: 10),
+          // decoration: BoxDecoration(
+          //     borderRadius: BorderRadius.circular(35),
+          //     border: Border.all(
+          //         color: Color.fromARGB(255, 189, 224, 56), width: 3.5)),
+          // child: ClipRRect(
+          //     // borderRadius: BorderRadius.circular(30),
+          //     // child: Image.asset(
+          //     //   widget.bathroom.getImagePath,
+          //     //   width: 20,
+          //     //   height: 20,
+          //     //   fit: BoxFit.cover,
+          //     // )
+          //     )
+              ),
       Expanded(
           child: ListView(
         padding: const EdgeInsets.only(top: 30),
@@ -158,7 +160,7 @@ class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
         backgroundColor: Color.fromARGB(255, 223, 223, 223),
         bottomNavigationBar: BottomNavigationBar(
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.feed), label: "De talhes"),
+            BottomNavigationBarItem(icon: Icon(Icons.feed), label: "Detalhes"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.campaign), label: "Notificar"),
             BottomNavigationBarItem(
