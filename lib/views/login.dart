@@ -14,8 +14,12 @@ class LoginScreen extends StatelessWidget {
     String email = "", password = "";
 
     return Scaffold(
+      
       backgroundColor: const Color.fromARGB(255, 223, 223, 223),
-      body: Container(
+      body: 
+      SingleChildScrollView(
+        child:
+      Container(
         padding: const EdgeInsets.all(35),
         child: Center(
             child: Column(
@@ -103,6 +107,7 @@ class LoginScreen extends StatelessWidget {
                             _formKey.currentState!.save();
                             BlocProvider.of<AuthBloc>(context).add(
                                 LoginUser(email: email, password: password));
+
                           }
                         },
                         child: const Text(
@@ -139,6 +144,7 @@ class LoginScreen extends StatelessWidget {
           ],
         )),
       ),
+    )
     );
   }
 }
