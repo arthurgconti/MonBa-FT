@@ -259,28 +259,27 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 children: [
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: const Color.fromARGB(255, 189, 224, 56),
-                      shadowColor: const Color.fromARGB(255, 0, 0, 0),
-                      minimumSize: const Size(115, 40),
-                      maximumSize: const Size(115, 40),
-                    ),
-                    onPressed: () {
-                      BlocProvider.of<AuthBloc>(context).add(
-                                Logout());
-                      Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginScreen()));
-                    },
-                    child: const Text(
-                          'Sair',
-                          style: TextStyle(
-                            // fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        )
-              )],
+                      style: ElevatedButton.styleFrom(
+                        primary: const Color.fromARGB(255, 189, 224, 56),
+                        shadowColor: const Color.fromARGB(255, 0, 0, 0),
+                        minimumSize: const Size(115, 40),
+                        maximumSize: const Size(115, 40),
+                      ),
+                      onPressed: () {
+                        BlocProvider.of<AuthBloc>(context).add(Logout());
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreen()));
+                      },
+                      child: const Text(
+                        'Sair',
+                        style: TextStyle(
+                          // fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ))
+                ],
                 mainAxisAlignment: MainAxisAlignment.center,
               ),
             ],
