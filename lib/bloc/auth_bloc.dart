@@ -33,7 +33,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     on<LoginUser>((event, emit) async {
       try {
-        _authenticationService.singInWithEmailAndPassword(
+        await _authenticationService.singInWithEmailAndPassword(
             event.email, event.password);
       } catch (e) {
         emit(AuthError(
