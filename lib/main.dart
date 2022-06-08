@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monba_ft/bloc/auth_bloc.dart';
 import 'package:monba_ft/bloc/bathroom_bloc.dart';
 import 'package:monba_ft/bloc/bathroom_monitor_bloc.dart';
+import 'package:monba_ft/provider/firestore_provider.dart';
 import 'package:monba_ft/provider/rest_provider.dart';
 import 'package:monba_ft/views/wrapper.dart';
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RestServer.helper.insertBathroom();
+    FirestoreServer.helper.insertBathroom();
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => BathroomBloc()),
