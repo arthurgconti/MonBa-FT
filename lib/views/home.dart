@@ -15,6 +15,7 @@ import '../model/banheiroLP.dart';
 import '../model/banheiros.dart';
 import 'banheiro_detalhes.dart';
 import 'login.dart';
+import 'navigation_drawer_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -200,11 +201,12 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     return Scaffold(
+        drawer: NavigationDrawerWidget(),
         appBar: AppBar(
             backgroundColor: Color.fromARGB(255, 189, 224, 56),
             centerTitle: true,
             title: const Text(
-              'MonBa-FT  |  HOME',
+              'MonBa-FT',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
