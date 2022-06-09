@@ -40,9 +40,9 @@ class FirestoreServer {
   }
 
   Future<int> updateBathroom(bathroomId, Banheiro bathroom) async {
-    // Response response = await _dio.put(
-    //     prefixUrl + bathroomUrl + "/" + bathroomId + suffixUrl,
-    //     data: bathroom);
+    await bathroomCollection
+        .doc(bathroomId)
+        .update({"defective": bathroom.getDefectiveSink});
     return 42;
   }
 
@@ -63,10 +63,66 @@ class FirestoreServer {
       final BanheiroBiblioteca banheiroBiblioteca = BanheiroBiblioteca(
           enm_status.naoInterditado, true, true, false, 0, true, false, 0);
 
-      DocumentReference ref = await bathroomCollection.add(banheiroPA);
-      ref = await bathroomCollection.add(banheiroLP);
-      ref = await bathroomCollection.add(banheiroBandeco);
-      ref = await bathroomCollection.add(banheiroBiblioteca);
+      DocumentReference ref = await bathroomCollection.add({
+        "imagePath": banheiroPA.getImagePath,
+        "location": banheiroPA.getLocation,
+        "status": banheiroPA.getStrStatus,
+        "toiletPaper": banheiroPA.getToiletPaper,
+        "towelPaper": banheiroPA.getTowelPaper,
+        "sinkQuantity": banheiroPA.getSinkQuantity,
+        "defectiveSink": banheiroPA.getDefectiveSink,
+        "quantityDefectiveSink": banheiroPA.getQuantityDefectiveSink,
+        "soap": banheiroPA.getSoap,
+        "quantitySoapSupport": banheiroPA.getQuantitySoapSupport,
+        "toiletQuantity": banheiroPA.getToiletQuantity,
+        "defectiveToilet": banheiroPA.getDefectiveToilet,
+        "quantityDefectiveToilet": banheiroPA.getQuantityDefectiveToilet
+      });
+      ref = await bathroomCollection.add({
+        "imagePath": banheiroLP.getImagePath,
+        "location": banheiroLP.getLocation,
+        "status": banheiroLP.getStrStatus,
+        "toiletPaper": banheiroLP.getToiletPaper,
+        "towelPaper": banheiroLP.getTowelPaper,
+        "sinkQuantity": banheiroLP.getSinkQuantity,
+        "defectiveSink": banheiroLP.getDefectiveSink,
+        "quantityDefectiveSink": banheiroLP.getQuantityDefectiveSink,
+        "soap": banheiroLP.getSoap,
+        "quantitySoapSupport": banheiroLP.getQuantitySoapSupport,
+        "toiletQuantity": banheiroLP.getToiletQuantity,
+        "defectiveToilet": banheiroLP.getDefectiveToilet,
+        "quantityDefectiveToilet": banheiroLP.getQuantityDefectiveToilet
+      });
+      ref = await bathroomCollection.add({
+        "imagePath": banheiroBandeco.getImagePath,
+        "location": banheiroBandeco.getLocation,
+        "status": banheiroBandeco.getStrStatus,
+        "toiletPaper": banheiroBandeco.getToiletPaper,
+        "towelPaper": banheiroBandeco.getTowelPaper,
+        "sinkQuantity": banheiroBandeco.getSinkQuantity,
+        "defectiveSink": banheiroBandeco.getDefectiveSink,
+        "quantityDefectiveSink": banheiroBandeco.getQuantityDefectiveSink,
+        "soap": banheiroBandeco.getSoap,
+        "quantitySoapSupport": banheiroBandeco.getQuantitySoapSupport,
+        "toiletQuantity": banheiroBandeco.getToiletQuantity,
+        "defectiveToilet": banheiroBandeco.getDefectiveToilet,
+        "quantityDefectiveToilet": banheiroBandeco.getQuantityDefectiveToilet
+      });
+      ref = await bathroomCollection.add({
+        "imagePath": banheiroBiblioteca.getImagePath,
+        "location": banheiroBiblioteca.getLocation,
+        "status": banheiroBiblioteca.getStrStatus,
+        "toiletPaper": banheiroBiblioteca.getToiletPaper,
+        "towelPaper": banheiroBiblioteca.getTowelPaper,
+        "sinkQuantity": banheiroBiblioteca.getSinkQuantity,
+        "defectiveSink": banheiroBiblioteca.getDefectiveSink,
+        "quantityDefectiveSink": banheiroBiblioteca.getQuantityDefectiveSink,
+        "soap": banheiroBiblioteca.getSoap,
+        "quantitySoapSupport": banheiroBiblioteca.getQuantitySoapSupport,
+        "toiletQuantity": banheiroBiblioteca.getToiletQuantity,
+        "defectiveToilet": banheiroBiblioteca.getDefectiveToilet,
+        "quantityDefectiveToilet": banheiroBiblioteca.getQuantityDefectiveToilet
+      });
     }
 
     return 42;

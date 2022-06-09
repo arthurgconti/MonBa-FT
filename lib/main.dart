@@ -5,7 +5,6 @@ import 'package:monba_ft/bloc/auth_bloc.dart';
 import 'package:monba_ft/bloc/bathroom_bloc.dart';
 import 'package:monba_ft/bloc/bathroom_monitor_bloc.dart';
 import 'package:monba_ft/provider/firestore_provider.dart';
-import 'package:monba_ft/provider/rest_provider.dart';
 import 'package:monba_ft/views/wrapper.dart';
 
 void main() async {
