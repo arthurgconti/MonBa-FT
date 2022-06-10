@@ -8,8 +8,8 @@ class ResolveForm {
   static Enum papelToalhaRadio = enm_paperTowel.none;
   static Enum piaRadio = enm_fixedSink.none;
   static Enum privadaRadio = enm_fixedToilet.none;
-  static bool saboneteRadio = false;
+  static Enum saboneteRadio = enm_soap.none;
 
-  static int privadasDefeituosas = 0;
-  static int piasDefeituosas = 0;
+  static int privadasDefeituosas = -1;
+  static int piasDefeituosas = -1;
 }

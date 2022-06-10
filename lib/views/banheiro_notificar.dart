@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:monba_ft/bloc/bathroom_monitor_bloc.dart';
+import 'package:monba_ft/bloc/bathroom_monitor_event.dart';
 import 'package:monba_ft/enum/notificarEnum.dart';
+import 'package:monba_ft/enum/resolverEnum.dart';
 import 'package:monba_ft/enum/statusEnum.dart';
+import 'package:monba_ft/provider/firestore_provider.dart';
 
+import '../model/banheiro.dart';
 import 'form_notificar.dart';
 
 class BanheiroNotificarScreen extends StatefulWidget {
-  String bathroomName;
-  BanheiroNotificarScreen(this.bathroomName, {Key? key}) : super(key: key);
+  Banheiro bath;
+  BanheiroNotificarScreen(this.bath, {Key? key}) : super(key: key);
 
   @override
   State<BanheiroNotificarScreen> createState() =>
@@ -24,7 +30,7 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
           child: ListView(children: [
             Card(
                 child: ListTile(
-                    title: Text(widget.bathroomName),
+                    title: Text(widget.bath.getLocation),
                     leading: const Icon(Icons.location_on))),
             const Divider(),
             Card(
@@ -114,9 +120,9 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                 Row(
                   children: [
                     Radio(
-                      value: true,
+                      value: enm_fixedSink.alguma,
                       groupValue: NotificarForm.piaRadio,
-                      onChanged: (bool? value) {
+                      onChanged: (Enum? value) {
                         if (value != null) {
                           setState(() => NotificarForm.piaRadio = value);
                         }
@@ -125,8 +131,13 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                     const Text("Pias defeituosas")
                   ],
                 ),
-                if (NotificarForm.piaRadio)
+                if (NotificarForm.piaRadio == enm_fixedSink.alguma)
                   TextFormField(
+                      onSaved: (value) {
+                        if (value != null) {
+                          NotificarForm.piasDefeituosas = int.parse(value);
+                        }
+                      },
                       decoration: const InputDecoration(
                           fillColor: Colors.white,
                           filled: true,
@@ -146,9 +157,9 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                 Row(
                   children: [
                     Radio(
-                      value: false,
+                      value: enm_soap.nao,
                       groupValue: NotificarForm.saboneteRadio,
-                      onChanged: (bool? value) {
+                      onChanged: (Enum? value) {
                         if (value != null) {
                           setState(() => NotificarForm.saboneteRadio = value);
                         }
@@ -168,9 +179,9 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                 Row(
                   children: [
                     Radio(
-                      value: true,
+                      value: enm_fixedToilet.alguma,
                       groupValue: NotificarForm.privadaRadio,
-                      onChanged: (bool? value) {
+                      onChanged: (Enum? value) {
                         if (value != null) {
                           setState(() => NotificarForm.privadaRadio = value);
                         }
@@ -179,8 +190,13 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                     const Text("Privadas defeituosas")
                   ],
                 ),
-                if (NotificarForm.privadaRadio)
+                if (NotificarForm.privadaRadio == enm_fixedToilet.alguma)
                   TextFormField(
+                      onSaved: (value) {
+                        if (value != null) {
+                          NotificarForm.privadasDefeituosas = int.parse(value);
+                        }
+                      },
                       decoration: const InputDecoration(
                           fillColor: Colors.white,
                           filled: true,
@@ -203,6 +219,57 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
             maximumSize: const Size(180, 50),
           ),
           onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              _formKey.currentState!.save();
+            }
+            Banheiro newBanheiro = widget.bath;
+
+            newBanheiro.setBathStatus =
+                NotificarForm.statusRadio != enm_status.nenhum
+                    ? NotificarForm.statusRadio
+                    : newBanheiro.getStatus;
+
+            if (NotificarForm.papelHigienicoRadio != enm_toiletPaper.none) {
+              newBanheiro.setBathToiletPaper = false;
+            }
+
+            if (NotificarForm.papelToalhaRadio == enm_paperTowel.none) {
+              newBanheiro.setBathTowelPaper = false;
+            }
+
+            if (NotificarForm.piaRadio != enm_fixedSink.none) {
+              newBanheiro.setBathDefectiveSink = false;
+            }
+            newBanheiro.setBathQuantityDefectiveSink =
+                NotificarForm.piasDefeituosas != -1
+                    ? NotificarForm.piasDefeituosas
+                    : newBanheiro.getQuantityDefectiveSink;
+
+            if (NotificarForm.privadaRadio != enm_fixedToilet.none) {
+              newBanheiro.setBathDefectiveToilet = true;
+            }
+            newBanheiro.setBathQuantityDefectiveToilet =
+                NotificarForm.privadasDefeituosas != -1
+                    ? NotificarForm.privadasDefeituosas
+                    : newBanheiro.getQuantityDefectiveToilet;
+
+            if (NotificarForm.saboneteRadio != enm_soap.none) {
+              newBanheiro.setBathSoap = true;
+            }
+
+            FirestoreServer.helper.updateBathroom(
+                widget.bath.getUid,
+                Banheiro.simple(
+                  newBanheiro.getStatus,
+                  newBanheiro.getToiletPaper,
+                  newBanheiro.getTowelPaper,
+                  newBanheiro.getDefectiveSink,
+                  newBanheiro.getQuantityDefectiveSink,
+                  newBanheiro.getSoap,
+                  newBanheiro.getDefectiveToilet,
+                  newBanheiro.getQuantityDefectiveToilet,
+                ));
+            BlocProvider.of<BathroomMonitorBloc>(context).add(AskNewList());
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 backgroundColor: Colors.green,
                 duration: Duration(seconds: 1),
@@ -224,12 +291,12 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
       NotificarForm.statusRadio = enm_status.nenhum;
       NotificarForm.papelHigienicoRadio = enm_toiletPaper.none;
       NotificarForm.papelToalhaRadio = enm_paperTowel.none;
-      NotificarForm.piaRadio = false;
-      NotificarForm.saboneteRadio = true;
-      NotificarForm.privadaRadio = false;
+      NotificarForm.piaRadio = enm_fixedSink.none;
+      NotificarForm.saboneteRadio = enm_soap.none;
+      NotificarForm.privadaRadio = enm_fixedToilet.none;
 
-      NotificarForm.privadasDefeituosas = 0;
-      NotificarForm.piasDefeituosas = 0;
+      NotificarForm.privadasDefeituosas = -1;
+      NotificarForm.piasDefeituosas = -1;
     });
   }
 }

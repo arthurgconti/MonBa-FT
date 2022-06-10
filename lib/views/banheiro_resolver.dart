@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monba_ft/enum/notificarEnum.dart';
 import 'package:monba_ft/enum/resolverEnum.dart';
 import 'package:monba_ft/enum/statusEnum.dart';
 import 'package:monba_ft/views/form_resolver.dart';
 
+import '../bloc/bathroom_monitor_bloc.dart';
+import '../bloc/bathroom_monitor_event.dart';
+import '../model/banheiro.dart';
+import '../provider/firestore_provider.dart';
 import 'form_notificar.dart';
 
 class BanheiroResolverScreen extends StatefulWidget {
-  String bathroomLocation;
-  BanheiroResolverScreen(this.bathroomLocation, {Key? key}) : super(key: key);
+  Banheiro bath;
+  BanheiroResolverScreen(this.bath, {Key? key}) : super(key: key);
 
   @override
   State<BanheiroResolverScreen> createState() =>
@@ -26,7 +31,7 @@ class _BanheiroNotificarScreenState extends State<BanheiroResolverScreen> {
           child: ListView(children: [
             Card(
                 child: ListTile(
-                    title: Text(widget.bathroomLocation),
+                    title: Text(widget.bath.getLocation),
                     leading: const Icon(Icons.location_on))),
             const Divider(),
             Card(
@@ -160,9 +165,9 @@ class _BanheiroNotificarScreenState extends State<BanheiroResolverScreen> {
                 Row(
                   children: [
                     Radio(
-                      value: true,
+                      value: enm_soap.sim,
                       groupValue: ResolveForm.saboneteRadio,
-                      onChanged: (bool? value) {
+                      onChanged: (Enum? value) {
                         if (value != null) {
                           setState(() => ResolveForm.saboneteRadio = value);
                         }
@@ -208,6 +213,11 @@ class _BanheiroNotificarScreenState extends State<BanheiroResolverScreen> {
                 ),
                 if (ResolveForm.privadaRadio == enm_fixedToilet.alguma)
                   TextFormField(
+                      onSaved: (value) {
+                        if (value != null) {
+                          ResolveForm.piasDefeituosas = int.parse(value);
+                        }
+                      },
                       decoration: const InputDecoration(
                           fillColor: Colors.white,
                           filled: true,
@@ -230,6 +240,62 @@ class _BanheiroNotificarScreenState extends State<BanheiroResolverScreen> {
             maximumSize: const Size(180, 50),
           ),
           onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              _formKey.currentState!.save();
+            }
+            Banheiro newBanheiro = widget.bath;
+
+            newBanheiro.setBathStatus =
+                ResolveForm.statusRadio != enm_status.nenhum
+                    ? ResolveForm.statusRadio
+                    : newBanheiro.getStatus;
+
+            if (ResolveForm.papelHigienicoRadio != enm_toiletPaper.none) {
+              newBanheiro.setBathToiletPaper = true;
+            }
+            if (ResolveForm.papelToalhaRadio == enm_paperTowel.none) {
+              newBanheiro.setBathTowelPaper = true;
+            }
+
+            if (ResolveForm.piaRadio != enm_fixedSink.none) {
+              newBanheiro.setBathDefectiveSink =
+                  ResolveForm.piaRadio == enm_fixedSink.todos ? false : true;
+            }
+
+            newBanheiro.setBathQuantityDefectiveSink =
+                ResolveForm.piasDefeituosas != -1
+                    ? (newBanheiro.getQuantityDefectiveSink -
+                        ResolveForm.piasDefeituosas)
+                    : newBanheiro.getQuantityDefectiveSink;
+
+            if (ResolveForm.privadaRadio != enm_fixedToilet.none) {
+              newBanheiro.setBathDefectiveToilet =
+                  ResolveForm.privadaRadio == enm_fixedToilet.todos
+                      ? false
+                      : true;
+            }
+            newBanheiro.setBathQuantityDefectiveToilet =
+                ResolveForm.privadasDefeituosas != -1
+                    ? (newBanheiro.getQuantityDefectiveToilet -
+                        ResolveForm.privadasDefeituosas)
+                    : newBanheiro.getQuantityDefectiveToilet;
+
+            if (ResolveForm.saboneteRadio != enm_soap.none) {
+              newBanheiro.setBathSoap = true;
+            }
+            FirestoreServer.helper.updateBathroom(
+                widget.bath.getUid,
+                Banheiro.simple(
+                  newBanheiro.getStatus,
+                  newBanheiro.getToiletPaper,
+                  newBanheiro.getTowelPaper,
+                  newBanheiro.getDefectiveSink,
+                  newBanheiro.getQuantityDefectiveSink,
+                  newBanheiro.getSoap,
+                  newBanheiro.getDefectiveToilet,
+                  newBanheiro.getQuantityDefectiveToilet,
+                ));
+            BlocProvider.of<BathroomMonitorBloc>(context).add(AskNewList());
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 backgroundColor: Colors.green,
                 duration: Duration(seconds: 1),
@@ -253,10 +319,10 @@ class _BanheiroNotificarScreenState extends State<BanheiroResolverScreen> {
       ResolveForm.papelToalhaRadio = enm_paperTowel.none;
       ResolveForm.piaRadio = enm_fixedSink.none;
       ResolveForm.privadaRadio = enm_fixedToilet.none;
-      ResolveForm.saboneteRadio = false;
+      ResolveForm.saboneteRadio = enm_soap.none;
 
-      ResolveForm.privadasDefeituosas = 0;
-      ResolveForm.piasDefeituosas = 0;
+      ResolveForm.privadasDefeituosas = -1;
+      ResolveForm.piasDefeituosas = -1;
     });
   }
 }

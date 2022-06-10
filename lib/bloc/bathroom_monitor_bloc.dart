@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:monba_ft/provider/firestore_provider.dart';
 
 import '../model/banheiros.dart';
 import '../provider/rest_provider.dart';
@@ -11,7 +12,7 @@ class BathroomMonitorBloc
 
   BathroomMonitorBloc() : super(BathroomMonitorState(bathrooms: bathrooms)) {
     on<AskNewList>(((event, emit) async {
-      bathrooms = await RestServer.helper.getBathroomList();
+      bathrooms = await FirestoreServer.helper.getBathroomList();
       emit(BathroomMonitorState(bathrooms: bathrooms));
     }));
     add(AskNewList());

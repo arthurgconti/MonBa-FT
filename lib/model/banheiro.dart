@@ -2,10 +2,11 @@ import '../enum/statusEnum.dart';
 
 class Banheiro {
   String _imagePath = '';
+  String _uid = '';
 
   String _location = '';
   String _strStatus = '';
-  enm_status _status = enm_status.naoInterditado;
+  Enum _status = enm_status.naoInterditado;
 
   bool _toiletPaper = true;
   bool _towelPaper = true;
@@ -21,10 +22,11 @@ class Banheiro {
   bool _defectiveToilet = false;
   int _quantityDefectiveToilet = 0;
 
+  String get getUid => _uid;
   String get getImagePath => _imagePath;
   String get getLocation => _location;
   String get getStrStatus => _strStatus;
-  enm_status get getStatus => _status;
+  Enum get getStatus => _status;
   bool get getToiletPaper => _toiletPaper;
   bool get getTowelPaper => _towelPaper;
   int get getSinkQuantity => _sinkQuantity;
@@ -36,10 +38,59 @@ class Banheiro {
   bool get getDefectiveToilet => _defectiveToilet;
   int get getQuantityDefectiveToilet => _quantityDefectiveToilet;
 
+  set setUid(String uid) {
+    _uid = uid;
+  }
+
+  set setBathStatus(Enum status) {
+    _status = status;
+    switch (status) {
+      case enm_status.parcial:
+        _strStatus = "Parcialmente interditado";
+        break;
+      case enm_status.totalmente:
+        _strStatus = "Interditado";
+        break;
+      default:
+        _strStatus = "Não interditado";
+        break;
+    }
+  }
+
+  set setBathToiletPaper(bool paper) {
+    _toiletPaper = paper;
+  }
+
+  set setBathTowelPaper(bool paper) {
+    _towelPaper = paper;
+  }
+
+  set setBathDefectiveSink(bool defectiveSink) {
+    _defectiveSink = defectiveSink;
+  }
+
+  set setBathQuantityDefectiveSink(int bathQuantityDefectiveSink) {
+    _quantityDefectiveSink = bathQuantityDefectiveSink;
+  }
+
+  set setBathSoap(bool soap) {
+    _soap = soap;
+  }
+
+  set setBathDefectiveToilet(bool defectiveToilet) {
+    _defectiveToilet = defectiveToilet;
+  }
+
+  set setBathQuantityDefectiveToilet(int quantityDefectiveToilet) {
+    _quantityDefectiveToilet = quantityDefectiveToilet;
+  }
+
+  //     int
+
   Banheiro(
       String bathImagePath,
       String bathLocation,
-      enm_status bathStatus,
+      Enum bathStatus,
       bool bathToiletPaper,
       bool bathTowelPaper,
       int bathSinkQuantity,
@@ -77,10 +128,41 @@ class Banheiro {
     }
   }
 
+  Banheiro.simple(
+      Enum bathStatus,
+      bool bathToiletPaper,
+      bool bathTowelPaper,
+      bool bathDefectiveSink,
+      int bathQuantityDefectiveSink,
+      bool bathSoap,
+      bool bathDefectiveToilet,
+      int bathQuantityDefectiveToilet) {
+    _status = bathStatus;
+    _toiletPaper = bathToiletPaper;
+    _towelPaper = bathTowelPaper;
+    _defectiveSink = bathDefectiveSink;
+    _quantityDefectiveSink = bathQuantityDefectiveSink;
+    _soap = bathSoap;
+    _defectiveToilet = bathDefectiveToilet;
+    _quantityDefectiveToilet = bathQuantityDefectiveToilet;
+
+    switch (bathStatus) {
+      case enm_status.parcial:
+        _strStatus = "Parcialmente interditado";
+        break;
+      case enm_status.totalmente:
+        _strStatus = "Interditado";
+        break;
+      default:
+        _strStatus = "Não interditado";
+        break;
+    }
+  }
+
   Banheiro.fromMap(map) {
     _imagePath = map["imagePath"];
     _location = map["location"];
-    _strStatus = map["str_status"];
+    _strStatus = map["status"];
     _toiletPaper = map["toiletPaper"];
     _towelPaper = map["towelPaper"];
     _sinkQuantity = map["sinkQuantity"];
@@ -107,7 +189,7 @@ class Banheiro {
     var map = Map<String, dynamic>();
     map["imagePath"] = _imagePath;
     map["location"] = _location;
-    map["str_status"] = _strStatus;
+    map["status"] = _strStatus;
     map["toiletPaper"] = _toiletPaper;
     map["towelPaper"] = _towelPaper;
     map["sinkQuantity"] = _sinkQuantity;

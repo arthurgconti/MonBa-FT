@@ -3,6 +3,7 @@ import 'package:monba_ft/bloc/auth_event.dart';
 
 import '../model/userModel.dart';
 import '../provider/firebase_auth.dart';
+import '../provider/firestore_provider.dart';
 import 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -18,6 +19,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (event.userModel == null) {
         emit(Unauthenticated());
       } else {
+        FirestoreServer.helper.uid = event.userModel!.uid;
         emit(Authenticated(userModel: event.userModel!));
       }
     });

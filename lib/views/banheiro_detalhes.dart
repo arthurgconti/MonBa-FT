@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:monba_ft/bloc/bathroom_bloc.dart';
 import 'package:monba_ft/enum/statusEnum.dart';
 import 'package:monba_ft/views/banheiro_notificar.dart';
 import 'package:monba_ft/views/banheiro_resolver.dart';
+
+import '../bloc/bathroom_monitor_bloc.dart';
+import '../bloc/bathroom_monitor_state.dart';
 
 class BanheiroDetalhesScreen extends StatefulWidget {
   var bathroom;
@@ -15,136 +20,129 @@ class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
   var _currentScreen = 0;
 
   Widget banheiroDetalhes() {
-    return Row(children: [
-      Container(
-          // margin: const EdgeInsets.only(right: 10, left: 10),
-          // decoration: BoxDecoration(
-          //     borderRadius: BorderRadius.circular(35),
-          //     border: Border.all(
-          //         color: Color.fromARGB(255, 189, 224, 56), width: 3.5)),
-          // child: ClipRRect(
-          //     // borderRadius: BorderRadius.circular(30),
-          //     // child: Image.asset(
-          //     //   widget.bathroom.getImagePath,
-          //     //   width: 20,
-          //     //   height: 20,
-          //     //   fit: BoxFit.cover,
-          //     // )
-          //     )
-              ),
-      Expanded(
-          child: ListView(
-        padding: const EdgeInsets.only(top: 30),
-        children: <Widget>[
-          Card(
-              child: ListTile(
-                  title: Text(widget.bathroom.getLocation),
-                  leading: const Icon(Icons.location_on))),
-          Card(
-              child: ListTile(
-                  title: Text(widget.bathroom.getStrStatus),
-                  leading: Icon(
-                    Icons.info,
-                    color: widget.bathroom.getStatus == enm_status.totalmente
-                        ? (Colors.redAccent)
-                        : (widget.bathroom.getStatus == enm_status.parcial
-                            ? Colors.amber
-                            : Colors.lightGreen),
-                  ))),
-          const Divider(),
-          const Card(
-              child: ListTile(
-            title: Text('Papel Higiênico'),
-            leading: Icon(Icons.receipt_long),
-            trailing: Icon(
-              Icons.block,
-              color: Colors.redAccent,
-            ),
-          )),
-          const Card(
-              child: ListTile(
-            title: Text('Papel Toalha'),
-            leading: Icon(Icons.dry_cleaning),
-            trailing: Icon(
-              Icons.task_alt,
-              color: Colors.lightGreen,
-            ),
-          )),
-          const Divider(),
-          Card(
-              child: ExpansionTile(
-            title: const Text('Pia'),
-            leading: const Icon(Icons.countertops),
-            children: [
-              ListTile(
-                title: Text('Quantidade: ${widget.bathroom.getSinkQuantity}'),
-              ),
-              ListTile(
-                title: const Text('Pia defeituosa'),
+    return BlocBuilder<BathroomMonitorBloc, BathroomMonitorState>(
+      builder: (context, state) {
+        var bathroom = state.bathrooms
+            .bathroom(state.bathrooms.getIndexOfId(widget.bathroom.getUid));
+        return Row(children: [
+          Container(),
+          Expanded(
+              child: ListView(
+            padding: const EdgeInsets.only(top: 30),
+            children: <Widget>[
+              Card(
+                  child: ListTile(
+                      title: Text(bathroom.getLocation),
+                      leading: const Icon(Icons.location_on))),
+              Card(
+                  child: ListTile(
+                      title: Text(bathroom.getStrStatus),
+                      leading: Icon(
+                        Icons.info,
+                        color: bathroom.getStatus == enm_status.totalmente
+                            ? (Colors.redAccent)
+                            : (bathroom.getStatus == enm_status.parcial
+                                ? Colors.amber
+                                : Colors.lightGreen),
+                      ))),
+              const Divider(),
+              Card(
+                  child: ListTile(
+                title: const Text('Papel Higiênico'),
+                leading: const Icon(Icons.receipt_long),
                 trailing: Icon(
-                  widget.bathroom.getDefectiveSink
-                      ? Icons.task_alt
-                      : Icons.block,
-                  color: widget.bathroom.getDefectiveSink
-                      ? Colors.redAccent
-                      : Colors.lightGreen,
-                ),
-              ),
-              if (widget.bathroom.getDefectiveSink)
-                ListTile(
-                  title: Text(
-                      'Quantidade de pias com defeito: ${widget.bathroom.getQuantityDefectiveSink}'),
-                )
-            ],
-          )),
-          Card(
-              child: ExpansionTile(
-            title: const Text('Sabonete'),
-            leading: const Icon(Icons.soap),
-            children: [
-              ListTile(
-                  title: Text(
-                      'Quantidade de suportes: ${widget.bathroom.getQuantitySoapSupport}')),
-              ListTile(
-                title: const Text('Disponibilidade'),
-                trailing: Icon(
-                  widget.bathroom.getSoap ? Icons.task_alt : Icons.block,
-                  color: widget.bathroom.getSoap
+                  bathroom.getToiletPaper ? Icons.task_alt : Icons.block,
+                  color: bathroom.getToiletPaper
                       ? Colors.lightGreen
                       : Colors.redAccent,
                 ),
-              ),
-            ],
-          )),
-          Card(
-              child: ExpansionTile(
-            title: const Text('Privada'),
-            leading: const Icon(Icons.event_seat),
-            children: [
-              ListTile(
-                title: Text('Quantidade: ${widget.bathroom.getToiletQuantity}'),
-              ),
-              ListTile(
-                title: const Text('Privadas defeituosas'),
+              )),
+              Card(
+                  child: ListTile(
+                title: const Text('Papel Toalha'),
+                leading: const Icon(Icons.dry_cleaning),
                 trailing: Icon(
-                  widget.bathroom.getDefectiveToilet
-                      ? Icons.task_alt
-                      : Icons.block,
-                  color: widget.bathroom.getDefectiveToilet
-                      ? Colors.redAccent
-                      : Colors.lightGreen,
+                  bathroom.getTowelPaper ? Icons.task_alt : Icons.block,
+                  color: bathroom.getTowelPaper == true
+                      ? Colors.lightGreen
+                      : Colors.redAccent,
                 ),
-              ),
-              if (widget.bathroom.getDefectiveToilet)
-                ListTile(
-                  title: Text(
-                      'Quantidade de privadas com defeito: ${widget.bathroom.getQuantityDefectiveToilet}'),
-                )
+              )),
+              const Divider(),
+              Card(
+                  child: ExpansionTile(
+                title: const Text('Pia'),
+                leading: const Icon(Icons.countertops),
+                children: [
+                  ListTile(
+                    title: Text('Quantidade: ${bathroom.getSinkQuantity}'),
+                  ),
+                  ListTile(
+                    title: const Text('Pia defeituosa'),
+                    trailing: Icon(
+                      bathroom.getDefectiveSink ? Icons.task_alt : Icons.block,
+                      color: bathroom.getDefectiveSink
+                          ? Colors.redAccent
+                          : Colors.lightGreen,
+                    ),
+                  ),
+                  if (bathroom.getDefectiveSink)
+                    ListTile(
+                      title: Text(
+                          'Quantidade de pias com defeito: ${bathroom.getQuantityDefectiveSink}'),
+                    )
+                ],
+              )),
+              Card(
+                  child: ExpansionTile(
+                title: const Text('Sabonete'),
+                leading: const Icon(Icons.soap),
+                children: [
+                  ListTile(
+                      title: Text(
+                          'Quantidade de suportes: ${bathroom.getQuantitySoapSupport}')),
+                  ListTile(
+                    title: const Text('Disponibilidade'),
+                    trailing: Icon(
+                      bathroom.getSoap ? Icons.task_alt : Icons.block,
+                      color: bathroom.getSoap
+                          ? Colors.lightGreen
+                          : Colors.redAccent,
+                    ),
+                  ),
+                ],
+              )),
+              Card(
+                  child: ExpansionTile(
+                title: const Text('Privada'),
+                leading: const Icon(Icons.event_seat),
+                children: [
+                  ListTile(
+                    title: Text('Quantidade: ${bathroom.getToiletQuantity}'),
+                  ),
+                  ListTile(
+                    title: const Text('Privadas defeituosas'),
+                    trailing: Icon(
+                      bathroom.getDefectiveToilet
+                          ? Icons.task_alt
+                          : Icons.block,
+                      color: bathroom.getDefectiveToilet
+                          ? Colors.redAccent
+                          : Colors.lightGreen,
+                    ),
+                  ),
+                  if (bathroom.getDefectiveToilet)
+                    ListTile(
+                      title: Text(
+                          'Quantidade de privadas com defeito: ${bathroom.getQuantityDefectiveToilet}'),
+                    )
+                ],
+              ))
             ],
           ))
-        ],
-      ))
-    ]);
+        ]);
+      },
+    );
   }
 
   @override
@@ -154,10 +152,10 @@ class _BanheiroDetalhesScreenState extends State<BanheiroDetalhesScreen> {
             AppBar(backgroundColor: const Color.fromARGB(255, 189, 224, 56)),
         body: IndexedStack(index: _currentScreen, children: [
           banheiroDetalhes(),
-          BanheiroNotificarScreen(widget.bathroom.getLocation),
-          BanheiroResolverScreen(widget.bathroom.getLocation)
+          BanheiroNotificarScreen(widget.bathroom),
+          BanheiroResolverScreen(widget.bathroom)
         ]),
-        backgroundColor: Color.fromARGB(255, 223, 223, 223),
+        backgroundColor: const Color.fromARGB(255, 223, 223, 223),
         bottomNavigationBar: BottomNavigationBar(
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.feed), label: "Detalhes"),

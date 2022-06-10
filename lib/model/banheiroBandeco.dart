@@ -3,7 +3,7 @@ import 'banheiro.dart';
 
 class BanheiroBandeco extends Banheiro {
   BanheiroBandeco(
-      enm_status status,
+      Enum status,
       bool toiletPaper,
       bool towelPaper,
       bool defectiveSink,

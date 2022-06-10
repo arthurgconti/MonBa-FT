@@ -159,6 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
           bathrooms.bathroom(0).getSoap,
           bathrooms.bathroom(0).getDefectiveToilet,
           bathrooms.bathroom(0).getQuantityDefectiveToilet);
+      _banheiroPA.setUid = bathrooms.getIdAtIndex(0);
 
       _banheiroLP = BanheiroLP(
           bathrooms.bathroom(1).getStatus,
@@ -169,6 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
           bathrooms.bathroom(1).getSoap,
           bathrooms.bathroom(1).getDefectiveToilet,
           bathrooms.bathroom(1).getQuantityDefectiveToilet);
+      _banheiroLP.setUid = bathrooms.getIdAtIndex(1);
 
       _banheiroBandeco = BanheiroBandeco(
           bathrooms.bathroom(2).getStatus,
@@ -180,6 +182,8 @@ class _HomeScreenState extends State<HomeScreen> {
           bathrooms.bathroom(2).getDefectiveToilet,
           bathrooms.bathroom(2).getQuantityDefectiveToilet);
 
+      _banheiroBandeco.setUid = bathrooms.getIdAtIndex(2);
+
       _banheiroBiblioteca = BanheiroBiblioteca(
           bathrooms.bathroom(3).getStatus,
           bathrooms.bathroom(3).getToiletPaper,
@@ -189,6 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
           bathrooms.bathroom(3).getSoap,
           bathrooms.bathroom(3).getDefectiveToilet,
           bathrooms.bathroom(3).getQuantityDefectiveToilet);
+      _banheiroBiblioteca.setUid = bathrooms.getIdAtIndex(3);
     } catch (err) {
       _banheiroPA =
           BanheiroPA(enm_status.parcial, true, true, false, 0, true, false, 0);

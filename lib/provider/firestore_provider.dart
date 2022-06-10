@@ -39,9 +39,17 @@ class FirestoreServer {
   }
 
   Future<int> updateBathroom(bathroomId, Banheiro bathroom) async {
-    await bathroomCollection
-        .doc(bathroomId)
-        .update({"defective": bathroom.getDefectiveSink});
+    await bathroomCollection.doc(bathroomId).update({
+      "status": bathroom.getStrStatus,
+      "toiletPaper": bathroom.getToiletPaper,
+      "towelPaper": bathroom.getTowelPaper,
+      "defectiveSink": bathroom.getDefectiveSink,
+      "quantityDefectiveSink": bathroom.getQuantityDefectiveSink,
+      "soap": bathroom.getSoap,
+      "quantitySoapSupport": bathroom.getQuantitySoapSupport,
+      "defectiveToilet": bathroom.getDefectiveToilet,
+      "quantityDefectiveToilet": bathroom.getQuantityDefectiveToilet
+    });
     return 42;
   }
 
