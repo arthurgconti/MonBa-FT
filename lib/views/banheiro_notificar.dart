@@ -233,12 +233,12 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
               newBanheiro.setBathToiletPaper = false;
             }
 
-            if (NotificarForm.papelToalhaRadio == enm_paperTowel.none) {
+            if (NotificarForm.papelToalhaRadio != enm_paperTowel.none) {
               newBanheiro.setBathTowelPaper = false;
             }
 
             if (NotificarForm.piaRadio != enm_fixedSink.none) {
-              newBanheiro.setBathDefectiveSink = false;
+              newBanheiro.setBathDefectiveSink = true;
             }
             newBanheiro.setBathQuantityDefectiveSink =
                 NotificarForm.piasDefeituosas != -1
@@ -254,7 +254,7 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                     : newBanheiro.getQuantityDefectiveToilet;
 
             if (NotificarForm.saboneteRadio != enm_soap.none) {
-              newBanheiro.setBathSoap = true;
+              newBanheiro.setBathSoap = false;
             }
 
             FirestoreServer.helper.updateBathroom(
@@ -274,6 +274,7 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                 backgroundColor: Colors.green,
                 duration: Duration(seconds: 1),
                 content: Text("Notificação enviada com Sucesso!")));
+            widget.bath = newBanheiro;
             clearSelection();
           },
           child: const Text(

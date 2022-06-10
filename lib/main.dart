@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monba_ft/bloc/auth_bloc.dart';
 import 'package:monba_ft/bloc/bathroom_bloc.dart';
+import 'package:monba_ft/bloc/bathroom_event.dart';
 import 'package:monba_ft/bloc/bathroom_monitor_bloc.dart';
+import 'package:monba_ft/bloc/bathroom_monitor_event.dart';
 import 'package:monba_ft/provider/firestore_provider.dart';
 import 'package:monba_ft/views/wrapper.dart';
 
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => BathroomBloc()),
-        BlocProvider(create: (_) => BathroomMonitorBloc()),
+        BlocProvider(create: (_) => BathroomMonitorBloc()..add(InitEvent())),
         BlocProvider(create: (_) => AuthBloc())
       ],
       child: MaterialApp(

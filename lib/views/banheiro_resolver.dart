@@ -146,6 +146,11 @@ class _BanheiroNotificarScreenState extends State<BanheiroResolverScreen> {
                 ),
                 if (ResolveForm.piaRadio == enm_fixedSink.alguma)
                   TextFormField(
+                      onSaved: (value) {
+                        if (value != null) {
+                          ResolveForm.piasDefeituosas = int.parse(value);
+                        }
+                      },
                       decoration: const InputDecoration(
                           fillColor: Colors.white,
                           filled: true,
@@ -215,7 +220,7 @@ class _BanheiroNotificarScreenState extends State<BanheiroResolverScreen> {
                   TextFormField(
                       onSaved: (value) {
                         if (value != null) {
-                          ResolveForm.piasDefeituosas = int.parse(value);
+                          ResolveForm.privadasDefeituosas = int.parse(value);
                         }
                       },
                       decoration: const InputDecoration(
@@ -253,32 +258,59 @@ class _BanheiroNotificarScreenState extends State<BanheiroResolverScreen> {
             if (ResolveForm.papelHigienicoRadio != enm_toiletPaper.none) {
               newBanheiro.setBathToiletPaper = true;
             }
-            if (ResolveForm.papelToalhaRadio == enm_paperTowel.none) {
+            if (ResolveForm.papelToalhaRadio != enm_paperTowel.none) {
               newBanheiro.setBathTowelPaper = true;
             }
 
             if (ResolveForm.piaRadio != enm_fixedSink.none) {
               newBanheiro.setBathDefectiveSink =
                   ResolveForm.piaRadio == enm_fixedSink.todos ? false : true;
+
+              if (!newBanheiro.getDefectiveSink) {
+                newBanheiro.setBathQuantityDefectiveSink = 0;
+              }
             }
 
-            newBanheiro.setBathQuantityDefectiveSink =
-                ResolveForm.piasDefeituosas != -1
-                    ? (newBanheiro.getQuantityDefectiveSink -
-                        ResolveForm.piasDefeituosas)
-                    : newBanheiro.getQuantityDefectiveSink;
+            print("-------------------------------------");
+            if (ResolveForm.piasDefeituosas != -1) {
+              print("AAAAAAAAAAAAAAAAAAAAAAAAAAA");
+              print(ResolveForm.piasDefeituosas);
+              if ((newBanheiro.getQuantityDefectiveSink -
+                      ResolveForm.piasDefeituosas) >
+                  0) {
+                newBanheiro.setBathQuantityDefectiveSink =
+                    (newBanheiro.getQuantityDefectiveSink -
+                        ResolveForm.piasDefeituosas);
+              } else {
+                newBanheiro.setBathQuantityDefectiveSink = 0;
+                newBanheiro.setBathDefectiveSink = false;
+              }
+            }
 
             if (ResolveForm.privadaRadio != enm_fixedToilet.none) {
               newBanheiro.setBathDefectiveToilet =
                   ResolveForm.privadaRadio == enm_fixedToilet.todos
                       ? false
                       : true;
+              if (!newBanheiro.getDefectiveToilet) {
+                newBanheiro.setBathQuantityDefectiveToilet = 0;
+              }
             }
-            newBanheiro.setBathQuantityDefectiveToilet =
-                ResolveForm.privadasDefeituosas != -1
-                    ? (newBanheiro.getQuantityDefectiveToilet -
-                        ResolveForm.privadasDefeituosas)
-                    : newBanheiro.getQuantityDefectiveToilet;
+
+            if (ResolveForm.privadasDefeituosas != -1) {
+              print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+              print(ResolveForm.privadasDefeituosas);
+              if ((newBanheiro.getQuantityDefectiveToilet -
+                      ResolveForm.privadasDefeituosas) >
+                  0) {
+                newBanheiro.setBathQuantityDefectiveToilet =
+                    (newBanheiro.getQuantityDefectiveToilet -
+                        ResolveForm.privadasDefeituosas);
+              } else {
+                newBanheiro.setBathQuantityDefectiveToilet = 0;
+                newBanheiro.setBathDefectiveToilet = false;
+              }
+            }
 
             if (ResolveForm.saboneteRadio != enm_soap.none) {
               newBanheiro.setBathSoap = true;
@@ -300,6 +332,7 @@ class _BanheiroNotificarScreenState extends State<BanheiroResolverScreen> {
                 backgroundColor: Colors.green,
                 duration: Duration(seconds: 1),
                 content: Text("Problema Resolvido com Sucesso!")));
+            widget.bath = newBanheiro;
             clearSelection();
           },
           child: const Text(

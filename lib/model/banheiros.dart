@@ -12,7 +12,7 @@ class BathroomCollection {
   void printList() {
     for (var i = 0; i < bathroomList.length; i++) {
       print("Id: " + idList[i]);
-      print("| Bathroom: " + bathroomList[i].toString() + "\n");
+      print("| Bathroom: " + bathroomList[i].getLocation + "\n");
     }
   }
 

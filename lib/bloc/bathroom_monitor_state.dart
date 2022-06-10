@@ -5,3 +5,11 @@ class BathroomMonitorState {
 
   BathroomMonitorState({required this.bathrooms});
 }
+
+class Loading extends BathroomMonitorState {
+  Loading(bathrooms) : super(bathrooms: bathrooms);
+}
+
+class Loaded extends BathroomMonitorState {
+  Loaded(bathrooms) : super(bathrooms: bathrooms);
+}

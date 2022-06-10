@@ -136,18 +136,26 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  build(BuildContext context) {
     return BlocBuilder<BathroomMonitorBloc, BathroomMonitorState>(
         builder: (context, state) {
-      return mainMenu(state.bathrooms);
+      if (state is Loading) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      } else {
+        return mainMenu(state.bathrooms);
+      }
     });
   }
 
-  Widget mainMenu(BathroomCollection bathrooms) {
+  mainMenu(BathroomCollection bathrooms) {
     BanheiroPA _banheiroPA;
     BanheiroLP _banheiroLP;
     BanheiroBandeco _banheiroBandeco;
     BanheiroBiblioteca _banheiroBiblioteca;
+
+    bathrooms.printList();
 
     try {
       _banheiroPA = BanheiroPA(
@@ -161,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
           bathrooms.bathroom(0).getQuantityDefectiveToilet);
       _banheiroPA.setUid = bathrooms.getIdAtIndex(0);
 
-      _banheiroLP = BanheiroLP(
+      _banheiroBandeco = BanheiroBandeco(
           bathrooms.bathroom(1).getStatus,
           bathrooms.bathroom(1).getToiletPaper,
           bathrooms.bathroom(1).getTowelPaper,
@@ -170,9 +178,10 @@ class _HomeScreenState extends State<HomeScreen> {
           bathrooms.bathroom(1).getSoap,
           bathrooms.bathroom(1).getDefectiveToilet,
           bathrooms.bathroom(1).getQuantityDefectiveToilet);
-      _banheiroLP.setUid = bathrooms.getIdAtIndex(1);
 
-      _banheiroBandeco = BanheiroBandeco(
+      _banheiroBandeco.setUid = bathrooms.getIdAtIndex(1);
+
+      _banheiroLP = BanheiroLP(
           bathrooms.bathroom(2).getStatus,
           bathrooms.bathroom(2).getToiletPaper,
           bathrooms.bathroom(2).getTowelPaper,
@@ -181,8 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
           bathrooms.bathroom(2).getSoap,
           bathrooms.bathroom(2).getDefectiveToilet,
           bathrooms.bathroom(2).getQuantityDefectiveToilet);
-
-      _banheiroBandeco.setUid = bathrooms.getIdAtIndex(2);
+      _banheiroLP.setUid = bathrooms.getIdAtIndex(2);
 
       _banheiroBiblioteca = BanheiroBiblioteca(
           bathrooms.bathroom(3).getStatus,

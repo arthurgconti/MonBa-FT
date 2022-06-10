@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:monba_ft/provider/firestore_provider.dart';
 
 import '../model/banheiros.dart';
-import '../provider/rest_provider.dart';
 import 'bathroom_monitor_event.dart';
 import 'bathroom_monitor_state.dart';
 
@@ -15,6 +14,12 @@ class BathroomMonitorBloc
       bathrooms = await FirestoreServer.helper.getBathroomList();
       emit(BathroomMonitorState(bathrooms: bathrooms));
     }));
-    add(AskNewList());
+    on<InitEvent>(((event, emit) async {
+      emit(Loading(bathrooms));
+      bathrooms = await FirestoreServer.helper.getBathroomList();
+      bathrooms.printList();
+      emit(BathroomMonitorState(bathrooms: bathrooms));
+    }));
+    // add(AskNewList());
   }
 }
