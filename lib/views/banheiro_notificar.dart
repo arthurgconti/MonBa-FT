@@ -8,6 +8,8 @@ import 'package:monba_ft/enum/statusEnum.dart';
 import 'package:monba_ft/model/notification.dart';
 import 'package:monba_ft/provider/firestore_provider.dart';
 
+import '../bloc/notification_bloc.dart';
+import '../bloc/notification_bloc_event.dart';
 import '../model/banheiro.dart';
 import 'form_notificar.dart';
 
@@ -286,6 +288,8 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
 
             FirestoreServer.helper.notify(notification);
             BlocProvider.of<BathroomMonitorBloc>(context).add(AskNewList());
+            BlocProvider.of<NotificationMonitorBloc>(context)
+                .add(AskListNotification());
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 backgroundColor: Colors.green,
                 duration: Duration(seconds: 1),

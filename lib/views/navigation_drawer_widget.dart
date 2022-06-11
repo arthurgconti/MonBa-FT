@@ -33,7 +33,7 @@ class NavigationDrawerWidget extends ListView {
                             color: Color.fromARGB(255, 180, 180, 180),
                             child: ListTile(
                               title: Text(notification.getLocation),
-                              subtitle: Text(notification.getStrStatus),
+                              subtitle: Text(notification.getNotificaitonDate),
                             )),
                       )
                       .toList()

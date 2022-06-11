@@ -17,7 +17,6 @@ class NotificationMonitorBloc
     on<InitNotificationEvent>((event, emit) async {
       emit(LoadingNotification(notifications));
       notifications = await FirestoreServer.helper.getNotificationUserList();
-      notifications.printList();
       emit(NotificationBlocState(notifications: notifications));
     });
   }
