@@ -5,6 +5,7 @@ import 'package:monba_ft/bloc/bathroom_monitor_event.dart';
 import 'package:monba_ft/enum/notificarEnum.dart';
 import 'package:monba_ft/enum/resolverEnum.dart';
 import 'package:monba_ft/enum/statusEnum.dart';
+import 'package:monba_ft/model/notification.dart';
 import 'package:monba_ft/provider/firestore_provider.dart';
 
 import '../model/banheiro.dart';
@@ -257,6 +258,19 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
               newBanheiro.setBathSoap = false;
             }
 
+            BathNotification notification = BathNotification(
+              newBanheiro.getLocation,
+              newBanheiro.getStatus,
+              newBanheiro.getToiletPaper,
+              newBanheiro.getTowelPaper,
+              newBanheiro.getDefectiveSink,
+              newBanheiro.getQuantityDefectiveSink,
+              newBanheiro.getSoap,
+              newBanheiro.getDefectiveToilet,
+              newBanheiro.getQuantityDefectiveToilet,
+            );
+            notification.setNotificationDate = DateTime.now().toString();
+
             FirestoreServer.helper.updateBathroom(
                 widget.bath.getUid,
                 Banheiro.simple(
@@ -269,6 +283,8 @@ class _BanheiroNotificarScreenState extends State<BanheiroNotificarScreen> {
                   newBanheiro.getDefectiveToilet,
                   newBanheiro.getQuantityDefectiveToilet,
                 ));
+
+            FirestoreServer.helper.notify(notification);
             BlocProvider.of<BathroomMonitorBloc>(context).add(AskNewList());
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 backgroundColor: Colors.green,

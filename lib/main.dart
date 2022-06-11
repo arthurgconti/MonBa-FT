@@ -6,8 +6,11 @@ import 'package:monba_ft/bloc/bathroom_bloc.dart';
 import 'package:monba_ft/bloc/bathroom_event.dart';
 import 'package:monba_ft/bloc/bathroom_monitor_bloc.dart';
 import 'package:monba_ft/bloc/bathroom_monitor_event.dart';
+import 'package:monba_ft/bloc/notification_bloc.dart';
 import 'package:monba_ft/provider/firestore_provider.dart';
 import 'package:monba_ft/views/wrapper.dart';
+
+import 'bloc/notification_bloc_event.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +28,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => BathroomBloc()),
         BlocProvider(create: (_) => BathroomMonitorBloc()..add(InitEvent())),
+        BlocProvider(
+            create: (_) =>
+                NotificationMonitorBloc()..add(InitNotificationEvent())),
         BlocProvider(create: (_) => AuthBloc())
       ],
       child: MaterialApp(

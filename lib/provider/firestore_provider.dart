@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:monba_ft/enum/statusEnum.dart';
 import 'package:monba_ft/model/banheiroPA.dart';
+import 'package:monba_ft/model/notification.dart';
 
 import '../model/banheiro.dart';
 import '../model/banheiroBandeco.dart';
 import '../model/banheiroBiblioteca.dart';
 import '../model/banheiroLP.dart';
 import '../model/banheiros.dart';
+import '../model/notifications.dart';
 import '../model/usuario.dart';
 
 class FirestoreServer {
@@ -17,6 +19,8 @@ class FirestoreServer {
 
   final CollectionReference bathroomCollection =
       FirebaseFirestore.instance.collection("bathroom");
+  final CollectionReference userCollection =
+      FirebaseFirestore.instance.collection("user");
 
   Future getBathroom({bathroomId = "banheiro"}) async {
     DocumentSnapshot doc = await bathroomCollection.doc(bathroomId).get();
@@ -50,6 +54,42 @@ class FirestoreServer {
       "defectiveToilet": bathroom.getDefectiveToilet,
       "quantityDefectiveToilet": bathroom.getQuantityDefectiveToilet
     });
+    return 42;
+  }
+
+  NotificationCollection _notificationListFromSnapshot(QuerySnapshot snapshot) {
+    NotificationCollection notiCollection = NotificationCollection();
+    for (var doc in snapshot.docs) {
+      BathNotification noti = BathNotification.fromMap(doc.data());
+      notiCollection.insertNoteOfId(doc.id, noti);
+    }
+    return notiCollection;
+  }
+
+  Future<NotificationCollection> getNotificationUserList() async {
+    QuerySnapshot snapshot =
+        await userCollection.doc(uid).collection("my_notifications").get();
+    return _notificationListFromSnapshot(snapshot);
+  }
+
+  Future<int?> notify(BathNotification notification) async {
+    DocumentReference ref =
+        await userCollection.doc(uid).collection("my_notifications").add({
+      "date": notification.getNotificaitonDate,
+      "location": notification.getLocation,
+      "status": notification.getStrStatus,
+      "toiletPaper": notification.getToiletPaper,
+      "towelPaper": notification.getTowelPaper,
+      "defectiveSink": notification.getDefectiveSink,
+      "quantityDefectiveSink": notification.getQuantityDefectiveSink,
+      "soap": notification.getSoap,
+      "defectiveToilet": notification.getDefectiveToilet,
+      "quantityDefectiveToilet": notification.getQuantityDefectiveToilet
+    });
+    return 42;
+  }
+
+  Future<int> updateUser(userId, User user) async {
     return 42;
   }
 
@@ -132,24 +172,6 @@ class FirestoreServer {
       });
     }
 
-    return 42;
-  }
-
-  Future getUser(userId) async {
-    // Response response =
-    //     await _dio.get(prefixUrl + userUrl + "/" + userId + suffixUrl);
-  }
-
-  Future<int> updateUser(userId, User user) async {
-    // Response response = await _dio.put(
-    //     prefixUrl + userUrl + "/" + userId + suffixUrl,
-    //     data: user.toMap());
-    return 42;
-  }
-
-  Future<int?> insertUser(User user) async {
-    // Response response =
-    //     // await _dio.post(prefixUrl + userUrl + suffixUrl, data: user.toMap());
     return 42;
   }
 }

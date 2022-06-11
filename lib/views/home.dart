@@ -155,8 +155,6 @@ class _HomeScreenState extends State<HomeScreen> {
     BanheiroBandeco _banheiroBandeco;
     BanheiroBiblioteca _banheiroBiblioteca;
 
-    bathrooms.printList();
-
     try {
       _banheiroPA = BanheiroPA(
           bathrooms.bathroom(0).getStatus,
