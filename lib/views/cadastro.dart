@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monba_ft/bloc/auth_event.dart';
 import 'package:monba_ft/bloc/user_bloc.dart';
 import 'package:monba_ft/bloc/user_event.dart';
-import 'package:monba_ft/views/home.dart';
+
 import '../bloc/auth_bloc.dart';
 import '../bloc/user_state.dart';
 import '../model/usuario.dart';
@@ -209,6 +209,7 @@ class CadastroScreen extends StatelessWidget {
                                       return "Campo não pode estar vazio";
                                     }
                                     if (value != user.getPassword) {
+                                      user.setPassword = "";
                                       return "Senhas não coincidem";
                                     } else {
                                       return null;
@@ -237,12 +238,8 @@ class CadastroScreen extends StatelessWidget {
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
                                     _formKey.currentState!.save();
-                                    BlocProvider.of<UserBloc>(context)
-                                        .add(SubmitUserEvent(user: user));
-                                    BlocProvider.of<AuthBloc>(context).add(
-                                        RegisterUser(
-                                            email: user.getEmail,
-                                            password: user.getPassword));
+                                    BlocProvider.of<AuthBloc>(context)
+                                        .add(RegisterUser(user: user));
                                     _formKey.currentState!.reset();
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         const SnackBar(
@@ -254,7 +251,7 @@ class CadastroScreen extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                LoginScreen()));
+                                                const LoginScreen()));
                                   }
                                 },
                                 child: const Text(

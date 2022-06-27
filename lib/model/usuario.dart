@@ -4,14 +4,20 @@ class User {
       _email = '',
       _cellphone = '',
       _username = '',
-      _password = '';
+      _password = '',
+      _uid = '';
 
+  String get getUid => _uid;
   String get getName => _name;
   String get getRa => _ra;
   String get getEmail => _email;
   String get getCellphone => _cellphone;
   String get getUsername => _username;
   String get getPassword => _password;
+
+  set setUid(uid) {
+    _uid = uid;
+  }
 
   set setName(name) {
     _name = name;
@@ -37,13 +43,14 @@ class User {
     _password = password;
   }
 
-  User(name, ra, email, cellphone, username, password) {
+  User(name, ra, email, cellphone, username, password, {uid = ''}) {
     _name = name;
     _ra = ra;
     _email = email;
     _cellphone = cellphone;
     _username = username;
     _password = password;
+    _uid = uid;
   }
 
   User.fromMap(map) {
@@ -56,7 +63,7 @@ class User {
   }
 
   toMap() {
-    var map = Map<String, dynamic>();
+    var map = <String, dynamic>{};
 
     map["name"] = _name;
     map["ra"] = _ra;

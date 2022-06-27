@@ -89,10 +89,6 @@ class FirestoreServer {
     return 42;
   }
 
-  Future<int> updateUser(userId, User user) async {
-    return 42;
-  }
-
   Future<int?> insertBathroom() async {
     BathroomCollection bathrooms = BathroomCollection();
 
@@ -172,6 +168,29 @@ class FirestoreServer {
       });
     }
 
+    return 42;
+  }
+
+  Future<int> updateUser(User user) async {
+    var ref = await userCollection.doc(uid).update({
+      "name": user.getName,
+      "cellphone": user.getCellphone,
+      "username": user.getUsername
+    });
+    return 42;
+  }
+
+  Future<int> insertUser(User user) async {
+    print("---------------------------------------------------");
+    print("UID:$uid");
+    print("---------------------------------------------------");
+    var ref = await userCollection.doc(user.getUid).set({
+      "name": user.getName,
+      "ra": user.getRa,
+      "email": user.getEmail,
+      "cellphone": user.getCellphone,
+      "username": user.getUsername
+    }, SetOptions(merge: true));
     return 42;
   }
 }

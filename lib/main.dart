@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monba_ft/bloc/auth_bloc.dart';
 import 'package:monba_ft/bloc/bathroom_bloc.dart';
-import 'package:monba_ft/bloc/bathroom_event.dart';
 import 'package:monba_ft/bloc/bathroom_monitor_bloc.dart';
 import 'package:monba_ft/bloc/bathroom_monitor_event.dart';
 import 'package:monba_ft/bloc/notification_bloc.dart';

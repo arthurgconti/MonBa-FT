@@ -26,8 +26,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     on<RegisterUser>((event, emit) async {
       try {
-        await _authenticationService.createUserWithEmailAndPassword(
-            event.email, event.password);
+        var newUser =
+            await _authenticationService.createUserWithEmailAndPassword(
+                event.user.getEmail, event.user.getPassword);
+        event.user.setUid = newUser!.uid;
+        FirestoreServer.helper.insertUser(event.user);
       } catch (e) {
         emit(AuthError(message: "Impossível Registrar: ${e.toString()}"));
       }

@@ -1,12 +1,13 @@
+import 'package:monba_ft/model/usuario.dart';
+
 import '../model/userModel.dart';
 
 abstract class AuthEvent {}
 
 class RegisterUser extends AuthEvent {
-  String email;
-  String password;
+  User user;
 
-  RegisterUser({required this.email, required this.password});
+  RegisterUser({required this.user});
 }
 
 class LoginUser extends AuthEvent {

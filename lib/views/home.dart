@@ -6,6 +6,7 @@ import 'package:monba_ft/enum/statusEnum.dart';
 import 'package:monba_ft/model/banheiroBiblioteca.dart';
 import 'package:monba_ft/model/banheiroPA.dart';
 import 'package:monba_ft/bloc/auth_event.dart';
+import 'package:monba_ft/provider/firestore_provider.dart';
 
 import '../bloc/auth_bloc.dart';
 import '../bloc/bathroom_monitor_state.dart';
@@ -280,6 +281,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       onPressed: () {
                         BlocProvider.of<AuthBloc>(context).add(Logout());
+                        FirestoreServer.helper.uid = "";
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
