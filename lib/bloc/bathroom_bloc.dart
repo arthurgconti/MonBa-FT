@@ -13,10 +13,7 @@ class BathroomBloc extends Bloc<BathroomEvent, BathroomState> {
         });
     on<UpdateCancel>((event, emit) => {emit(InsertState())});
 
-    on<SubmitBathroomNotification>((event, emit) => {
-          if (state is UpdateState)
-            RestServer.helper.updateBathroom(
-                (state as UpdateState).bathroomId, event.bathroom)
-        });
+    on<SubmitBathroomNotification>(
+        (event, emit) => {if (state is UpdateState) {}});
   }
 }

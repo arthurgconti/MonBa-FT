@@ -15,8 +15,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           if (state is InsertState)
             FirestoreServer.helper.insertUser(event.user)
           else if (state is UpdateState)
-            RestServer.helper
-                .updateUser((state as UpdateState).userId, event.user)
+            FirestoreServer.helper.updateUser(event.user)
         });
   }
 }
