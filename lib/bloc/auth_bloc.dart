@@ -49,6 +49,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<Logout>((event, emit) async {
       try {
         await _authenticationService.singOut();
+        FirestoreServer.helper.uid = "";
       } catch (e) {
         emit(AuthError(message: "Impossível fetuar logout: ${e.toString()}"));
       }

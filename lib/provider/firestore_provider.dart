@@ -181,9 +181,6 @@ class FirestoreServer {
   }
 
   Future<int> insertUser(User user) async {
-    print("---------------------------------------------------");
-    print("UID:$uid");
-    print("---------------------------------------------------");
     var ref = await userCollection.doc(user.getUid).set({
       "name": user.getName,
       "ra": user.getRa,
@@ -192,5 +189,11 @@ class FirestoreServer {
       "username": user.getUsername
     }, SetOptions(merge: true));
     return 42;
+  }
+
+  Future getUser() async {
+    DocumentSnapshot doc = await userCollection.doc(uid).get();
+    User user = User.fromMap(doc.data());
+    return user;
   }
 }

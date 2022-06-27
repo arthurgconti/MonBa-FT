@@ -59,7 +59,6 @@ class User {
     _email = map["email"];
     _cellphone = map["cellphone"];
     _username = map["username"];
-    _password = map["password"];
   }
 
   toMap() {
@@ -70,7 +69,6 @@ class User {
     map["email"] = _email;
     map["cellphone"] = _cellphone;
     map["username"] = _username;
-    map["password"] = _password;
 
     return map;
   }

@@ -32,13 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _selected = 1;
       });
-    } else if (value == 2) {
-      setState(() {
-        _selected = 2;
-      });
     } else {
       setState(() {
-        _selected = 3;
+        _selected = 2;
       });
     }
   }
@@ -248,27 +244,36 @@ class _HomeScreenState extends State<HomeScreen> {
                       )),
                   customRadioButton(
                       2, const Icon(Icons.accessible, color: Colors.white)),
-                  customRadioButton(
-                      3, const Icon(Icons.woman, color: Colors.white)),
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
               ),
               const SizedBox(height: 25.0),
-              Row(
-                children: [
-                  bathroomImagesButton(context,
-                      leftBathroom: _banheiroPA, rightBathroom: _banheiroLP)
-                ],
-                mainAxisAlignment: MainAxisAlignment.center,
-              ),
-              Row(
-                children: [
-                  bathroomImagesButton(context,
-                      leftBathroom: _banheiroBandeco,
-                      rightBathroom: _banheiroBiblioteca)
-                ],
-                mainAxisAlignment: MainAxisAlignment.center,
-              ),
+              if (getSelected() != 2)
+                Row(
+                  children: [
+                    bathroomImagesButton(context,
+                        leftBathroom: _banheiroPA, rightBathroom: _banheiroLP)
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ),
+              if (getSelected() == 2)
+                Row(
+                  children: [
+                    bathroomImagesButton(context,
+                        leftBathroom: _banheiroBandeco,
+                        rightBathroom: _banheiroLP)
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ),
+              if (getSelected() != 2)
+                Row(
+                  children: [
+                    bathroomImagesButton(context,
+                        leftBathroom: _banheiroBandeco,
+                        rightBathroom: _banheiroBiblioteca)
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ),
               const SizedBox(height: 20.0),
               Row(
                 children: [
@@ -281,7 +286,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       onPressed: () {
                         BlocProvider.of<AuthBloc>(context).add(Logout());
-                        FirestoreServer.helper.uid = "";
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
