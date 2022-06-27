@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monba_ft/bloc/user_event.dart';
 import 'package:monba_ft/bloc/user_state.dart';
-import 'package:monba_ft/provider/rest_provider.dart';
 
 import '../provider/firestore_provider.dart';
 
