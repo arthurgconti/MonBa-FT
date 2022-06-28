@@ -105,11 +105,6 @@ class LoginScreen extends StatelessWidget {
                                 BlocProvider.of<AuthBloc>(context).add(
                                     LoginUser(
                                         email: email, password: password));
-                              Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              HomeScreen()));
                               }
                             },
                             child: const Text(

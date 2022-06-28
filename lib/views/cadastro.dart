@@ -249,11 +249,7 @@ class CadastroScreen extends StatelessWidget {
                                             duration: Duration(seconds: 1),
                                             content: Text(
                                                 "Cadastro realizado com Sucesso!")));
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const LoginScreen()));
+                                    Navigator.pop(context);
                                   }
                                 },
                                 child: const Text(
