@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monba_ft/bloc/auth_event.dart';
+import 'package:monba_ft/views/home.dart';
 
 import '../bloc/auth_bloc.dart';
 import 'cadastro.dart';
@@ -104,6 +105,11 @@ class LoginScreen extends StatelessWidget {
                                 BlocProvider.of<AuthBloc>(context).add(
                                     LoginUser(
                                         email: email, password: password));
+                              Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              HomeScreen()));
                               }
                             },
                             child: const Text(
