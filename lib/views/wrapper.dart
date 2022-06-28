@@ -32,6 +32,7 @@ class _WrapperState extends State<Wrapper> {
         }
       },
       builder: (context, state) {
+        print(state);
         if (state is Authenticated) {
           return const HomeScreen();
         } else {

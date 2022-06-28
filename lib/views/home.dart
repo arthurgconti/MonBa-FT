@@ -223,18 +223,15 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.account_circle_rounded),
-            tooltip: 'Profile',
-            onPressed: () => {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ProfileScreen()))
-                                },
-          ),]
-            ),
+              IconButton(
+                icon: const Icon(Icons.account_circle_rounded),
+                tooltip: 'Profile',
+                onPressed: () => {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ProfileScreen()))
+                },
+              ),
+            ]),
         backgroundColor: Color.fromARGB(255, 223, 223, 223),
         body: Container(
           child: Column(
@@ -300,10 +297,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       onPressed: () {
                         BlocProvider.of<AuthBloc>(context).add(Logout());
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginScreen()));
+                        // Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const LoginScreen()));
                       },
                       child: const Text(
                         'Sair',

@@ -11,11 +11,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       FirebaseAuthenticationService();
   AuthBloc() : super(Unauthenticated()) {
     _authenticationService.user.listen((event) {
+      print(event);
       if (event is UserModel) {
         add(AuthServerEvent(event));
       }
     });
     on<AuthServerEvent>((event, emit) {
+      print(event.userModel?.uid);
       if (event.userModel == null) {
         emit(Unauthenticated());
       } else {
@@ -31,6 +33,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                 event.user.getEmail, event.user.getPassword);
         event.user.setUid = newUser!.uid;
         FirestoreServer.helper.insertUser(event.user);
+        emit(Unauthenticated());
       } catch (e) {
         emit(AuthError(message: "Impossível Registrar: ${e.toString()}"));
       }
@@ -38,8 +41,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     on<LoginUser>((event, emit) async {
       try {
-        await _authenticationService.singInWithEmailAndPassword(
-            event.email, event.password);
+        UserModel? user = await _authenticationService
+            .singInWithEmailAndPassword(event.email, event.password);
+        if (user != null) {
+          emit(Authenticated(userModel: user));
+        } else {
+          emit(Unauthenticated());
+        }
       } catch (e) {
         emit(AuthError(
             message: "Impossível Logar com ${event.email}: ${e.toString()}"));
@@ -50,6 +58,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         await _authenticationService.singOut();
         FirestoreServer.helper.uid = "";
+        emit(Unauthenticated());
       } catch (e) {
         emit(AuthError(message: "Impossível fetuar logout: ${e.toString()}"));
       }
