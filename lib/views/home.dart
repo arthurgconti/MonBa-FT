@@ -7,6 +7,7 @@ import 'package:monba_ft/model/banheiroBiblioteca.dart';
 import 'package:monba_ft/model/banheiroPA.dart';
 import 'package:monba_ft/bloc/auth_event.dart';
 import 'package:monba_ft/provider/firestore_provider.dart';
+import 'package:monba_ft/views/perfil.dart';
 
 import '../bloc/auth_bloc.dart';
 import '../bloc/bathroom_monitor_state.dart';
@@ -220,7 +221,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.black,
                 fontSize: 32,
               ),
-            )),
+            ),
+            actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.account_circle_rounded),
+            tooltip: 'Profile',
+            onPressed: () => {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ProfileScreen()))
+                                },
+          ),]
+            ),
         backgroundColor: Color.fromARGB(255, 223, 223, 223),
         body: Container(
           child: Column(
