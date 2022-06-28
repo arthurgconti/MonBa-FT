@@ -191,7 +191,7 @@ class FirestoreServer {
     return 42;
   }
 
-  Future getUser() async {
+  Future<User> getUser() async {
     DocumentSnapshot doc = await userCollection.doc(uid).get();
     User user = User.fromMap(doc.data());
     return user;

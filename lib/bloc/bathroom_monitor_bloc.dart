@@ -17,7 +17,6 @@ class BathroomMonitorBloc
     on<InitEvent>(((event, emit) async {
       emit(Loading(bathrooms));
       bathrooms = await FirestoreServer.helper.getBathroomList();
-      bathrooms.printList();
       emit(BathroomMonitorState(bathrooms: bathrooms));
     }));
     // add(AskNewList());

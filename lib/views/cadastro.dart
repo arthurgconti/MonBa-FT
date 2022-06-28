@@ -10,6 +10,8 @@ import '../model/usuario.dart';
 import 'login.dart';
 
 class CadastroScreen extends StatelessWidget {
+  const CadastroScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -49,7 +51,7 @@ class CadastroScreen extends StatelessWidget {
                           key: _formKey,
                           child: Column(
                             children: <Widget>[
-                              SizedBox(height: 18.0),
+                              const SizedBox(height: 18.0),
                               SizedBox(
                                 width: 350,
                                 height: 45,
@@ -72,7 +74,7 @@ class CadastroScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 12.0),
+                              const SizedBox(height: 12.0),
                               SizedBox(
                                 width: 350,
                                 height: 45,
@@ -96,7 +98,7 @@ class CadastroScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 12.0),
+                              const SizedBox(height: 12.0),
                               SizedBox(
                                 width: 350,
                                 height: 45,

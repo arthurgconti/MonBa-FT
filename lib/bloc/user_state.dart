@@ -1,12 +1,18 @@
 import '../model/usuario.dart';
 
-abstract class UserState {}
+class UserState {
+  User currentUser;
+  UserState({required this.currentUser});
+}
 
-class InsertState extends UserState {}
+class InsertState extends UserState {
+  InsertState(currentUser) : super(currentUser: currentUser);
+}
 
 class UpdateState extends UserState {
-  String userId;
-  User usuario;
+  UpdateState(currentUser) : super(currentUser: currentUser);
+}
 
-  UpdateState({required this.userId, required this.usuario});
+class Loading extends UserState {
+  Loading(currentUser) : super(currentUser: currentUser);
 }

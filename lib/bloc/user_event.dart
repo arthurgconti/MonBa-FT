@@ -8,10 +8,13 @@ class SubmitUserEvent extends UserEvent {
 }
 
 class UpdateUserEvent extends UserEvent {
-  String userId;
   User user;
 
-  UpdateUserEvent({required this.userId, required this.user});
+  UpdateUserEvent({required this.user});
 }
 
+class RefreshUserInfoEvent extends UserEvent {}
+
 class UpdateCancel extends UserEvent {}
+
+class InitUserEvent extends UserEvent {}
